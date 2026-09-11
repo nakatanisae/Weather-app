@@ -1,0 +1,12 @@
+schema: "classroom50/repo-config/v1"
+classroom: "m-0526-web-development-ii"
+assignment: "midterm-weather-app"
+owner:
+  username: "feakazawa"
+  id: 33233040
+  accepted_at: "2026-09-11T16:41:27Z"
+source:
+  owner: "Cornerstone-CICCC"
+  owner_id: 113148113
+  repo: "wad-202-mid-term-weather-app"
+  branch: "main"
