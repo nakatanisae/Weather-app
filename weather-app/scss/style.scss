@@ -1,0 +1,35 @@
+// color palette
+$dark-blue: #023047;
+$dark-green: #16697a;
+$turquoise: #489fb5;
+$light-blue: #82c0cc;
+$light-grey: #ede7e3;
+$orange: #ffa62b;
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+// 1rem = 16px
+
+// class name example (margin top 2rem):
+// .marginTop2{
+//  margin-top: 2rem
+//}
