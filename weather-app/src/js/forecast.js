@@ -35,3 +35,23 @@ export function createDailyForecastList(fiveDayForecast) {
     return dayForecast;
   });
 }
+
+export function renderFiveDayForecast(dailyForecastList) {
+  const forecastCards = document.querySelectorAll(".forecastCard");
+
+  if (!dailyForecastList || dailyForecastList.length === 0) {
+    console.error("Five-day forecast list is missing.");
+    return;
+  }
+
+  forecastCards.forEach((card, index) => {
+    const dayForecast = dailyForecastList[index];
+
+    if (!dayForecast) {
+      return;
+    }
+
+    card.textContent = dayForecast.date;
+    card.dataset.date = dayForecast.date;
+  });
+}
