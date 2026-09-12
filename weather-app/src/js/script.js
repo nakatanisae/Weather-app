@@ -1,11 +1,10 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//   main();
-// });
+document.addEventListener("DOMContentLoaded", () => {
+  main();
+});
 
-// async function main() {
-//   console.log("main thread running");
-//   //organize your js file(s)
-// }
+const searchLocation = document.getElementById("searchLocation");
 
-// example function name:
-// function getFetchA(){}
+async function main() {
+  console.log("main thread running");
+  //organize your js file(s)
+}

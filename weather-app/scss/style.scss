@@ -5,6 +5,8 @@ $turquoise: #489fb5;
 $light-blue: #82c0cc;
 $light-grey: #ede7e3;
 $orange: #ffa62b;
+$black: #000000;
+$white: #ffffff;
 
 * {
   box-sizing: border-box;
@@ -27,9 +29,78 @@ $orange: #ffa62b;
   }
 }
 
-// 1rem = 16px
+.flexLocation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-// class name example (margin top 2rem):
-// .marginTop2{
-//  margin-top: 2rem
-//}
+.favLocation {
+  padding: 1rem;
+  border-radius: 0.4rem;
+}
+
+.searchResultLocation {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchButton {
+  border: 0.1rem solid;
+  border-radius: 50px;
+  width: 7rem;
+  padding: 0.6rem;
+  background-color: $black;
+  color: $white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.flexSearch {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  padding: 0.6rem;
+  border: 1px solid;
+  border-radius: 2rem;
+  background-color: $white;
+}
+
+.bgResultAPI {
+  background-color: $light-grey;
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.searchBox {
+  width: 100%;
+  height: 2rem;
+  padding: 1rem;
+  border: none;
+}
+
+.apiResultBox {
+  margin-top: 1rem;
+  border: 1px solid $light-grey;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: $white;
+}
+
+.flexTemperature {
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}

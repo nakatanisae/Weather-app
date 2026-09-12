@@ -15,4 +15,80 @@
   font-size: 1.2rem;
 }
 
+.flexLocation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favLocation {
+  padding: 1rem;
+  border-radius: 0.4rem;
+}
+
+.searchResultLocation {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchButton {
+  border: 0.1rem solid;
+  border-radius: 50px;
+  width: 7rem;
+  padding: 0.6rem;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.flexSearch {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  padding: 0.6rem;
+  border: 1px solid;
+  border-radius: 2rem;
+  background-color: #ffffff;
+}
+
+.bgResultAPI {
+  background-color: #ede7e3;
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.searchBox {
+  width: 100%;
+  height: 2rem;
+  padding: 1rem;
+  border: none;
+}
+
+.apiResultBox {
+  margin-top: 1rem;
+  border: 1px solid #ede7e3;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+}
+
+.flexTemperature {
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+
 /*# sourceMappingURL=style.css.map */
