@@ -165,3 +165,20 @@ export function renderFiveDayForecast(dailyForecastList) {
     card.dataset.date = dayForecast.date;
   });
 }
+
+export function setupForecastCardClicks(onDaySelected) {
+  const forecastCards = document.querySelectorAll(".forecastCard");
+
+  forecastCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const selectedDate = card.dataset.date;
+
+      if (!selectedDate) {
+        console.error("Selected forecast date is missing.");
+        return;
+      }
+
+      onDaySelected(selectedDate);
+    });
+  });
+}
