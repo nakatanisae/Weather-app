@@ -17,7 +17,6 @@ export async function fetchFiveDayForecast(latitude, longitude) {
   }
 }
 
-
 export function getFiveDayForecast(forecastData) {
   if (!forecastData || !forecastData.daily || !forecastData.daily.time) {
     console.error("Daily forecast data is missing.");
@@ -71,7 +70,26 @@ export function renderFiveDayForecast(dailyForecastList) {
       return;
     }
 
-    card.textContent = dayForecast.date;
+    const date = new Date(`${dayForecast.date}T00:00:00`);
+
+    const weekday = date.toLocaleDateString("en-US", {
+      weekday: "short",
+    });
+
+    const monthDay = date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+
+    card.innerHTML = `
+      <span class="forecastWeekday">${weekday}</span>
+      <span class="forecastDate">${monthDay}</span>
+      <span class="forecastTemperature">
+        ${dayForecast.temperature_2m_max}°C /
+        ${dayForecast.temperature_2m_min}°C
+      </span>
+    `;
+
     card.dataset.date = dayForecast.date;
   });
 }
