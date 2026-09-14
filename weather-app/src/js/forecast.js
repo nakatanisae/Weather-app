@@ -3,9 +3,10 @@ export async function fetchFiveDayForecast(latitude, longitude) {
     const params = {
       latitude: String(latitude),
       longitude: String(longitude),
-      daily: "weather_code,temperature_2m_max,temperature_2m_min",
+      daily: "weather_code,temperature_2m_max,temperature_2m_min,sunset",
       timezone: "auto",
       forecast_days: "5",
+
     };
 
     const searchParams = new URLSearchParams(params);
@@ -19,8 +20,8 @@ export async function fetchFiveDayForecast(latitude, longitude) {
         `Forecast fetch failed: ${response.status} ${response.statusText}`
       );
     }
-
-    return await response.json();
+    const data = await response.json()
+    return data
   } catch (error) {
     console.error("Unable to fetch five-day forecast:", error);
     return null;
@@ -38,9 +39,7 @@ export function getFiveDayForecast(forecastData) {
   for (const key in forecastData.daily) {
     const value = forecastData.daily[key];
 
-    fiveDayForecast[key] = Array.isArray(value)
-      ? value.slice(0, 5)
-      : value;
+    fiveDayForecast[key] = value
   }
 
   return fiveDayForecast;
@@ -56,7 +55,7 @@ export function createDailyForecastList(fiveDayForecast) {
     const dayForecast = { date };
 
     for (const key in fiveDayForecast) {
-      if (key !== "time" && Array.isArray(fiveDayForecast[key])) {
+      if (key !== "time") {
         dayForecast[key] = fiveDayForecast[key][index];
       }
     }
@@ -144,7 +143,6 @@ export function renderFiveDayForecast(dailyForecastList) {
 
   forecastCards.forEach((card, index) => {
     const dayForecast = dailyForecastList[index];
-
     if (!dayForecast) {
       return;
     }
@@ -173,6 +171,7 @@ export function renderFiveDayForecast(dailyForecastList) {
     `;
 
     card.dataset.date = dayForecast.date;
+    return card.dataset.date;
   });
 }
 
@@ -192,3 +191,13 @@ export function setupForecastCardClicks(onDaySelected) {
     });
   });
 }
+
+const btn1 = document.getElementById('btn1')
+btn1.addEventListener('click', async ()=> {
+  const weatherData = await fetchFiveDayForecast('49.2608', '-123.1139')
+  const fiveDayForecast = getFiveDayForecast(weatherData)
+  const dailyForecast = createDailyForecastList(fiveDayForecast)
+  const selectedDate = renderFiveDayForecast(dailyForecast)
+  renderFiveDayForecast(selectedDate)
+})
+
