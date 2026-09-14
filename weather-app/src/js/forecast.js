@@ -1,8 +1,18 @@
 export async function fetchFiveDayForecast(latitude, longitude) {
   try {
-    const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=5`
-    );
+    const params = {
+      latitude: String(latitude),
+      longitude: String(longitude),
+      daily: "weather_code,temperature_2m_max,temperature_2m_min",
+      timezone: "auto",
+      forecast_days: "5",
+    };
+
+    const searchParams = new URLSearchParams(params);
+
+    const url = `https://api.open-meteo.com/v1/forecast?${searchParams}`;
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(
