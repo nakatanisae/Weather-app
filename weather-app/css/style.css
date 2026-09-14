@@ -19,11 +19,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
+}
+
+.bgMenuLocation {
+  background-color: #023047;
+  padding: 1.5rem;
 }
 
 .favLocation {
   padding: 1rem;
   border-radius: 0.4rem;
+  border-radius: 50px;
+  height: 3rem;
 }
 
 .searchResultLocation {
@@ -34,10 +42,11 @@
 .searchButton {
   border: 0.1rem solid;
   border-radius: 50px;
-  width: 7rem;
+  width: fit-content;
+  height: 3rem;
   padding: 0.6rem;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #ffa62b;
+  color: #000000;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -86,9 +95,49 @@
   align-items: center;
 }
 
-.flexCol {
+.windowContainer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.bgWindow {
+  width: 20rem;
+  height: 20rem;
+  object-fit: cover;
+  display: block;
+}
+
+.rainOverlay {
+  position: absolute;
+  top: -20%;
+  left: 5%;
+  width: 15rem;
+  height: 20rem;
+  background-image: url("/rain_drop.png");
+  background-repeat: repeat;
+  background-size: 150px auto; /* rain drop length */
+  animation: fall 1s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(30%);
+  }
+}
+.bgResult:hover {
+  background-color: #82c0cc;
+}
+
+.flexMobile {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*# sourceMappingURL=style.css.map */

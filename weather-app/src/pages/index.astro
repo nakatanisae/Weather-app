@@ -7,23 +7,23 @@ import { Icon } from "astro-icon/components";
 <Layout>
   <main>
     <div id="mainSection">
-      <div class="flexLocation">
+      <div class="flexLocation bgMenuLocation">
         <select
           name="favoriteLocation"
           id="favoriteLocation"
           class="favLocation"
         >
-          <option value="">Pick your favorite location</option>
+          <option value="">Favorite locations</option>
           <option value="vancouver">Vancouver</option>
         </select>
 
         <div class="searchResultLocation">
           <button id="searchBtn" class="searchButton">
             <Icon name="carbon:location-current" size={15} />
-            <span>Vancouver</span>
+            <span id="actualLocation">Vancouver</span>
           </button>
 
-          <div class="bgResultAPI">
+          <div id="selectLocation" class="bgResultAPI hidden">
             <div id="locationResult" class="flexSearch">
               <Icon name="ci:search-magnifying-glass" size={24} />
               <input
@@ -34,25 +34,26 @@ import { Icon } from "astro-icon/components";
               />
             </div>
 
-            <div id="apiResult" class="apiResultBox">978 granville street</div>
+            <div id="apiResult" class="hidden apiResultBox"></div>
           </div>
         </div>
       </div>
 
-      <div id="currentWeather">
+      <div class="flexMobile">
         <h2 id="cityName">Vancouver</h2>
-        <p id="cityDetail">
-          Vancouver(city), British Columbia(administrative) - Canada(country)
-        </p>
-        <div class="flexTemperature">
-          <h1 id="temperatureCelsius">18ºC</h1>
-          <div class="flexCol">
-            <Icon name="fontisto:day-cloudy" size={100} />
-            <p>Mostly cloudy</p>
-          </div>
-        </div>
+        <p id="cityDetail">British Columbia - Canada.</p>
+        <p id="cityCoords">Latitude: 49.2608724, Longitude: -123.1139529</p>
+        <h1 id="temperatureCelsius">18ºC</h1>
 
-        <div id="weatherInfo">weather details</div>
+        <!-- should update according to the weather -->
+        <!-- <div class="windowContainer">
+          <img
+            src="/rain_background.png"
+            alt="window showing dark sky"
+            class="bgWindow"
+          />
+          <div class="rainOverlay"></div>
+        </div> -->
       </div>
     </div>
   </main>
