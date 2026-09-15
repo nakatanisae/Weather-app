@@ -192,12 +192,34 @@ export function setupForecastCardClicks(onDaySelected) {
   });
 }
 
-const btn1 = document.getElementById('btn1')
-btn1.addEventListener('click', async ()=> {
-  const weatherData = await fetchFiveDayForecast('49.2608', '-123.1139')
-  const fiveDayForecast = getFiveDayForecast(weatherData)
-  const dailyForecast = createDailyForecastList(fiveDayForecast)
-  const selectedDate = renderFiveDayForecast(dailyForecast)
-  renderFiveDayForecast(selectedDate)
-})
+export async function loadFiveDayForecast(latitude, longitude) {
+  const weatherData = await fetchFiveDayForecast(latitude, longitude);
 
+  if (!weatherData) {
+    return;
+  }
+
+  const fiveDayForecast = getFiveDayForecast(weatherData);
+  const dailyForecast = createDailyForecastList(fiveDayForecast);
+
+  renderFiveDayForecast(dailyForecast);
+
+  return dailyForecast;
+}
+
+function loadDefaultFiveDayForecast() {
+  const vancouverLatitude = "49.2827";
+  const vancouverLongitude = "-123.1207";
+
+  loadFiveDayForecast(vancouverLatitude, vancouverLongitude);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadDefaultFiveDayForecast,
+    { once: true }
+  );
+} else {
+  loadDefaultFiveDayForecast();
+}
