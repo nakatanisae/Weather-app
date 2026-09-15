@@ -29,9 +29,25 @@ async function fetchWeatherData() {
         const times = data.hourly.time;
         const temp = data.hourly.temperature_2m;
         const weatherCode = data.hourly.weather_code;
+
+        //Get current time
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(now.getDate()).padStart(2, '0');
+        const currentHour = String(now.getHours()).padStart(2, '0');
+
+        const currentFormatTime = `${currentYear}-${currentMonth}-${currentDate}T${currentHour}:00`;
+        let startIndex = times.findIndex((timeStr) => timeStr >= currentFormatTime)
+
+        if(startIndex === -1){
+            startIndex = 0;
+        }
+
+        //Loop for each 3 hours
         const hourly3HoursData = [];
 
-        for (let i = 0; i < times.length; i += 3) {
+        for (let i = startIndex; i < times.length; i += 3) {
             hourly3HoursData.push({
                 time: times[i],
                 temp: temp[i].toFixed(1),
@@ -69,7 +85,6 @@ async function fetchWeatherData() {
         const timeString = item.time.split("T")[1];
 
         const icon = showWeatherIcon(item.code)
-
 
         const card = document.createElement("div");
         card.className = "hourly-card";

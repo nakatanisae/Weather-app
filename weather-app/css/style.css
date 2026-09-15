@@ -22,7 +22,7 @@
 .hourlyRange #hourly-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 .hourlyRange #hourly-container .hourly-card {
   display: flex;
