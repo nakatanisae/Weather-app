@@ -13,8 +13,7 @@ import { Icon } from "astro-icon/components";
           id="favoriteLocation"
           class="favLocation"
         >
-          <option value="">Favorite locations</option>
-          <option value="vancouver">Vancouver</option>
+          <option value="" disabled selected>Favorite locations</option>
         </select>
 
         <div class="searchResultLocation">
@@ -40,7 +39,15 @@ import { Icon } from "astro-icon/components";
       </div>
 
       <div class="flexMobile">
-        <h2 id="cityName">Vancouver</h2>
+        <h2 id="cityTitle">
+          <span id="cityName">Vancouver</span>
+          <span id="starOutlined" class="favoriteLocationIcon"
+            ><Icon name="ant-design:star-outlined" size={24} /></span
+          >
+          <span id="starFilled" class="hidden favoriteLocationIcon"
+            ><Icon name="ant-design:star-filled" size={24} /></span
+          >
+        </h2>
         <p id="cityDetail">British Columbia - Canada.</p>
         <p id="cityCoords">Latitude: 49.2608724, Longitude: -123.1139529</p>
         <h1 id="temperatureCelsius">18ºC</h1>
