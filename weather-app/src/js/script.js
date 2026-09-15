@@ -6,7 +6,7 @@
 //     return response.json();
 // }
 
-const testURL = "https://api.open-meteo.com/v1/forecast?latitude=49.2827&longitude=-123.1207&hourly=temperature_2m&timezone=auto";
+const testURL = "https://api.open-meteo.com/v1/forecast?latitude=49.2827&longitude=-123.1207&hourly=temperature_2m,weather_code&timezone=auto";
 
 async function fetchWeatherData() {
     try {
@@ -17,37 +17,64 @@ async function fetchWeatherData() {
 
         const times = data.hourly.time;
         const temp = data.hourly.temperature_2m;
+        const weatherCode = data.hourly.weather_code;
         const hourly3HoursData = [];
 
         for (let i = 0; i < times.length; i += 3) {
             hourly3HoursData.push({
                 time: times[i],
-                temp: temp[i]
+                temp: temp[i],
+                code: weatherCode[i],
             });
         }
 
         console.log("Data for 3 hours:", hourly3HoursData);
 
+        //Show weather icon depending on the weather code
+        function showWeatherCode(code) {
+            switch (true) {
+                case code === 0:
+                    return "☀️"; 
+
+                case code >= 1 && code <= 3:
+                    return "⛅"; 
+
+                case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
+                    return "🌧️"; 
+
+                case (code >= 71 && code <= 77) || (code >= 85 && code <= 86):
+                    return "❄️"; 
+
+                default:
+                    return "☁️"; 
+            }
+
+        }
 
         //DOM manipulation
         const container = document.getElementById("hourly-container");
 
         hourly3HoursData.forEach((item) => {
-            const timeString = item.time.split("T")[1];
+        const timeString = item.time.split("T")[1];
 
-            const card = document.createElement("div");
-            card.className = "hourly-card";
-            card.innerHTML = `
+        const icon = showWeatherCode(item.code)
+
+
+        const card = document.createElement("div");
+        card.className = "hourly-card";
+        card.innerHTML = `
                 <p>${timeString}</p>
+                <p>${icon}</p>
                 <p>${item.temp}°C</p>`;
 
-            container.appendChild(card);
-        })
-
-    } catch (error) {
-        console.log("Error", error)
-    }
+        container.appendChild(card);
+    });
+        
+} catch (error) {
+    console.log("Error", error);
 }
+}
+
 
 fetchWeatherData()
 

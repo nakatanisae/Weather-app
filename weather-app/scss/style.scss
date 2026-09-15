@@ -36,18 +36,26 @@ $orange: #ffa62b;
 
 .hourlyRange {
   border: #023047 solid 1px;
-  border-radius: 10%;
+  // border-radius: 10%;
   padding: 10px;
 
   #hourly-container {
   display: flex;
-  overflow-x: auto;
+  flex-direction: column;
+  overflow-y: auto;
   
 
   .hourly-card{
     margin: 0 10px ;
   }
  
+}
+}
+
+@media screen {
+  #hourly-container {
+  display: flex;
+  overflow-x: auto;
 }
 }
 
