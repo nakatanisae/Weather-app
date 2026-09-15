@@ -13,6 +13,7 @@
     "sass": "sass --watch scss:css"
   },
   "dependencies": {
+    "@iconify-json/ant-design": "^1.2.9",
     "@iconify-json/carbon": "^1.2.27",
     "@iconify-json/ci": "^1.2.2",
     "@iconify-json/fontisto": "^1.2.1",
