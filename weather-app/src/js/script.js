@@ -23,7 +23,7 @@ async function fetchWeatherData() {
         for (let i = 0; i < times.length; i += 3) {
             hourly3HoursData.push({
                 time: times[i],
-                temp: temp[i],
+                temp: temp[i].toFixed(1),
                 code: weatherCode[i],
             });
         }
@@ -31,7 +31,7 @@ async function fetchWeatherData() {
         console.log("Data for 3 hours:", hourly3HoursData);
 
         //Show weather icon depending on the weather code
-        function showWeatherCode(code) {
+        function showWeatherIcon(code) {
             switch (true) {
                 case code === 0:
                     return "☀️"; 
@@ -57,7 +57,7 @@ async function fetchWeatherData() {
         hourly3HoursData.forEach((item) => {
         const timeString = item.time.split("T")[1];
 
-        const icon = showWeatherCode(item.code)
+        const icon = showWeatherIcon(item.code)
 
 
         const card = document.createElement("div");

@@ -36,26 +36,39 @@ $orange: #ffa62b;
 
 .hourlyRange {
   border: #023047 solid 1px;
-  // border-radius: 10%;
   padding: 10px;
-
-  #hourly-container {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
   
 
-  .hourly-card{
-    margin: 0 10px ;
-  }
- 
-}
-}
-
-@media screen {
   #hourly-container {
-  display: flex;
-  overflow-x: auto;
-}
+    display: flex;
+    flex-direction: column;
+
+
+    .hourly-card {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 0 10px;
+    }
+
+  }
 }
 
+@media screen and (min-width: 1000px) {
+
+.hourlyRange{
+  #hourly-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;    
+
+    .hourly-card {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: center;
+    }
+  }
+}
+  
+}
