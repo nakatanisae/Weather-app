@@ -5,12 +5,23 @@
 //     const response = await fetch{}
 //     return response.json();
 // }
+const latitude = 49.2827;
+const longitude = -123.1207;
 
-const testURL = "https://api.open-meteo.com/v1/forecast?latitude=49.2827&longitude=-123.1207&hourly=temperature_2m,weather_code&timezone=auto";
+const params = {
+    latitude: String(latitude),
+    longitude: String(longitude),
+    hourly: "temperature_2m,weather_code",
+    timezone: "auto",
+};
+
+const searchParams = new URLSearchParams(params);
+
+const url = `https://api.open-meteo.com/v1/forecast?${searchParams}`;
 
 async function fetchWeatherData() {
     try {
-        const response = await fetch(testURL);
+        const response = await fetch(url);
         const data = await response.json();
 
         console.log("Get data:", data);

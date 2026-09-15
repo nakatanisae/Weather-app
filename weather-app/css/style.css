@@ -22,12 +22,12 @@
 .hourlyRange #hourly-container {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 .hourlyRange #hourly-container .hourly-card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0 10px;
 }
 
 @media screen and (min-width: 1000px) {
