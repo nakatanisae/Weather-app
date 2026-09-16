@@ -34,10 +34,11 @@ $orange: #ffa62b;
 //  margin-top: 2rem
 //}
 
+//mobile
 .hourlyRange {
   border: #023047 solid 1px;
   padding: 10px;
-  
+
 
   #hourly-container {
     display: flex;
@@ -54,21 +55,39 @@ $orange: #ffa62b;
   }
 }
 
-@media screen and (min-width: 1000px) {
-
-.hourlyRange{
-  #hourly-container {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;    
-
-    .hourlyCard {
+//tablet
+@media (min-width: 376px) and (max-width: 1439px) {
+  .hourlyRange {
+    #hourly-container {
       display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      align-items: center;
+      flex-direction: row;
+      overflow-x: auto;
+
+      .hourlyCard {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+      }
     }
   }
 }
-  
+
+// desktop
+@media screen and (min-width: 1440px) {
+
+  .hourlyRange {
+    #hourly-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+
+      .hourlyCard {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+      }
+    }
+  }
 }
