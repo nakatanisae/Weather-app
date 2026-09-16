@@ -17,12 +17,7 @@ import { Icon } from "astro-icon/components";
         </select>
 
         <div class="searchResultLocation">
-          <button id="searchBtn" class="searchButton">
-            <Icon name="carbon:location-current" size={15} />
-            <span id="actualLocation">Vancouver</span>
-          </button>
-
-          <div id="selectLocation" class="bgResultAPI hidden">
+          <div id="selectLocation" class="bgResultAPI">
             <div id="locationResult" class="flexSearch">
               <Icon name="ci:search-magnifying-glass" size={24} />
               <input
@@ -34,6 +29,21 @@ import { Icon } from "astro-icon/components";
             </div>
 
             <div id="apiResult" class="hidden apiResultBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- alert for missing favorite city -->
+      <div id="customAlertBox" class="customAlert hidden">
+        <div class="customAlertContent">
+          <span id="closeAlert" class="close">&times;</span>
+          <div class="flexRow">
+            <Icon
+              class="alertIcon"
+              name="akar-icons:circle-alert-fill"
+              size={70}
+            />
+            <p id="alertMessage"></p>
           </div>
         </div>
       </div>
