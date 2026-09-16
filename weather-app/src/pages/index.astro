@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import "../../css/style.css";
+import "./css/style.css";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout>
@@ -30,5 +31,74 @@ import "../../css/style.css";
         </button>
       </div>
     </section>
+  </main>
+</Layout>
+    <div id="mainSection">
+      <div class="flexLocation bgMenuLocation">
+        <select
+          name="favoriteLocation"
+          id="favoriteLocation"
+          class="favLocation"
+        >
+          <option value="" disabled selected>Favorite locations</option>
+        </select>
+
+        <div class="searchResultLocation">
+          <div id="selectLocation" class="bgResultAPI">
+            <div id="locationResult" class="flexSearch">
+              <Icon name="ci:search-magnifying-glass" size={24} />
+              <input
+                id="searchLocation"
+                type="text"
+                placeholder="Search for a location"
+                class="searchBox"
+              />
+            </div>
+
+            <div id="apiResult" class="hidden apiResultBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- alert for missing favorite city -->
+      <div id="customAlertBox" class="customAlert hidden">
+        <div class="customAlertContent">
+          <span id="closeAlert" class="close">&times;</span>
+          <div class="flexRow">
+            <Icon
+              class="alertIcon"
+              name="akar-icons:circle-alert-fill"
+              size={70}
+            />
+            <p id="alertMessage"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flexMobile">
+        <h2 id="cityTitle">
+          <span id="cityName">Loading...</span>
+          <span id="starOutlined" class="favoriteLocationIcon"
+            ><Icon name="ant-design:star-outlined" size={24} /></span
+          >
+          <span id="starFilled" class="hidden favoriteLocationIcon"
+            ><Icon name="ant-design:star-filled" size={24} /></span
+          >
+        </h2>
+        <p id="cityDetail"></p>
+        <p id="cityCoords"></p>
+        <h1 id="temperatureCelsius">18ºC</h1>
+
+        <!-- should update according to the weather -->
+        <!-- <div class="windowContainer">
+          <img
+            src="/rain_background.png"
+            alt="window showing dark sky"
+            class="bgWindow"
+          />
+          <div class="rainOverlay"></div>
+        </div> -->
+      </div>
+    </div>
   </main>
 </Layout>
