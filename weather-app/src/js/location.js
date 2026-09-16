@@ -1,5 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   main();
+
+  // geolocation pop up
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      successGettingCoords,
+      errorGettingCoords,
+    );
+  }
 });
 
 const searchBtn = document.getElementById("searchBtn");
@@ -17,6 +25,7 @@ const title = document.getElementById("cityTitle");
 const alertFavoriteBox = document.getElementById("customAlertBox");
 const alertMessageFavorite = document.getElementById("alertMessage");
 const closeAlertFavorite = document.getElementById("closeAlert");
+const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
 
 let dropDownResults;
 let favorites = [];
@@ -55,8 +64,11 @@ title.addEventListener("click", () => {
 selectFavLocal.addEventListener("change", (e) => {
   starFilled.classList.remove("hidden");
   starOutlined.classList.add("hidden");
-  const selectedCity =
-    e.target.value[0].toUpperCase() + e.target.value.slice(1);
+
+  const splittedCity = e.target.value.split(" ");
+  const selectedCity = splittedCity
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
 
   updateFromFavorite(selectedCity);
 });
@@ -73,7 +85,6 @@ async function main() {
 
 async function getLocation() {
   const BASE_URL = "https://api.placekit.co/search";
-  const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
 
   try {
     const payload = {
@@ -106,7 +117,7 @@ async function getLocation() {
     return data.results;
   } catch (error) {
     if (error instanceof Error) {
-      apiResults.innerHTML = `Error: ${error.message}`;
+      apiResults.innerHTML = `Error fetching location: ${error.message}`;
     }
   }
 }
@@ -114,14 +125,7 @@ async function getLocation() {
 function updateLocation(place, index) {
   city.textContent = place[index].city;
   cityDetail.textContent = `${place[index].name}, ${place[index].administrativecode} - ${place[index].country}.`;
-  coords.textContent = `Latitude: ${place[index].lat}, Longitude: ${place[index].lng}`;
-
-  return {
-    city: place[index].city,
-    region: `${place[index].name}, ${place[index].administrativecode} - ${place[index].country}.`,
-    latitude: place[index].lat,
-    longitude: place[index].lng,
-  };
+  coords.textContent = `Latitude: ${place[index].lat.toFixed(7)}, Longitude: ${place[index].lng.toFixed(7)}`;
 }
 
 function addFavoriteLocationToLocalStorage() {
@@ -131,6 +135,7 @@ function addFavoriteLocationToLocalStorage() {
 
   //clicked on favorite star
   if (starOutlined.classList.contains("hidden")) {
+    //show alert message
     if (!city.textContent || !cityDetail.textContent) {
       alertFavoriteBox.classList.remove("hidden");
       alertMessageFavorite.innerHTML = "You can't add this city to favorites!";
@@ -139,7 +144,6 @@ function addFavoriteLocationToLocalStorage() {
       starFilled.classList.add("hidden");
       starOutlined.classList.remove("hidden");
     } else {
-      console.log("entrei aqui");
       let newFavorite = {
         city: city.textContent,
         region: cityDetail.textContent,
@@ -179,6 +183,7 @@ function removeFavoriteLocationFromLocalStorage() {
       );
 
       favorites = remainingPlaces;
+      //remove location from local storage
       localStorage.setItem("favLocal", JSON.stringify(remainingPlaces));
 
       //update favorite location selector
@@ -197,5 +202,51 @@ function updateFromFavorite(selectedCity) {
 
   city.textContent = favoriteCity[0].city;
   cityDetail.textContent = favoriteCity[0].region;
-  coords.textContent = `Latitude: ${favoriteCity[0].latitude}, Longitude: ${favoriteCity[0].longitude}`;
+  coords.textContent = favoriteCity[0].coords;
+}
+
+function successGettingCoords(position) {
+  const lat = position.coords.latitude;
+  const long = position.coords.longitude;
+
+  updateLocationFromCoords(lat, long);
+}
+
+async function updateLocationFromCoords(latitude, longitude) {
+  const BASE_URL_COORDS = "https://api.placekit.co/reverse";
+  try {
+    const payloadCoords = {
+      coordinates: `${latitude}, ${longitude}`,
+      types: ["city", "street"],
+    };
+
+    const response = await fetch(BASE_URL_COORDS, {
+      method: "POST",
+      headers: {
+        "x-placekit-api-key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payloadCoords),
+    });
+
+    const data = await response.json();
+    updateLocation(data.results, 0);
+  } catch (error) {
+    if (error instanceof Error) {
+      apiResults.innerHTML = `Error trying to convert coordinates: ${error.message}`;
+    }
+  }
+}
+
+function errorGettingCoords(error) {
+  if (error.code === error.PERMISSION_DENIED) {
+    console.log("Localization permission denied by user");
+
+    // add default location
+    city.textContent = "Vancouver";
+    cityDetail.textContent = "British Columbia - Canada.";
+    coords.textContent = "Latitude: 49.2608724, Longitude: -123.1139529";
+  } else {
+    console.log("Not possible obtain localization");
+  }
 }
