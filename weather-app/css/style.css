@@ -72,6 +72,7 @@
   width: 15rem;
   padding: 1rem;
   border-radius: 0.5rem;
+  position: relative;
 }
 
 .searchBox {
@@ -87,6 +88,7 @@
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: #ede7e3;
+  position: absolute;
 }
 
 .flexTemperature {

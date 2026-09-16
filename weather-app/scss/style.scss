@@ -88,6 +88,7 @@ $alert-icon-close: #aaaaaa;
   width: 15rem;
   padding: 1rem;
   border-radius: 0.5rem;
+  position: relative;
 }
 
 .searchBox {
@@ -103,6 +104,7 @@ $alert-icon-close: #aaaaaa;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: $light-grey;
+  position: absolute;
 }
 
 .flexTemperature {
