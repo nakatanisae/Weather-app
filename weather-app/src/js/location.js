@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   main();
-  getLocation();
 });
 
 const searchBtn = document.getElementById("searchBtn");
 const selectLocation = document.getElementById("selectLocation");
 const inputLocation = document.getElementById("searchLocation");
 const apiResults = document.getElementById("apiResult");
-const actualLocation = document.getElementById("actualLocation");
 const city = document.getElementById("cityName");
 const cityDetail = document.getElementById("cityDetail");
 const coords = document.getElementById("cityCoords");
@@ -16,22 +14,14 @@ const starOutlined = document.getElementById("starOutlined");
 const starFilled = document.getElementById("starFilled");
 const selectFavLocal = document.getElementById("favoriteLocation");
 const title = document.getElementById("cityTitle");
+const alertFavoriteBox = document.getElementById("customAlertBox");
+const alertMessageFavorite = document.getElementById("alertMessage");
+const closeAlertFavorite = document.getElementById("closeAlert");
 
 let dropDownResults;
 let favorites = [];
 
-let updatedPlace = {
-  city: "Vancouver",
-  region: "British Columbia - Canada.",
-  latitude: 49.2608724,
-  longitude: -123.1139529,
-};
-
 // -------- Event listener
-
-searchBtn.addEventListener("click", () => {
-  selectLocation.classList.toggle("hidden");
-});
 
 inputLocation.addEventListener("input", async () => {
   const location = inputLocation.value.trim();
@@ -50,10 +40,9 @@ apiResults.addEventListener("click", (e) => {
   const target = e.target.closest("p[data-index]"); // look for the closest data-index inside <p> tag
   const index = target.dataset.index;
 
-  actualLocation.textContent = dropDownResults[index].city;
+  updateLocation(dropDownResults, index);
 
-  updatedPlace = updateLocation(dropDownResults, index);
-  selectLocation.classList.add("hidden");
+  apiResults.classList.add("hidden");
   starOutlined.classList.remove("hidden");
   starFilled.classList.add("hidden");
 });
@@ -72,6 +61,10 @@ selectFavLocal.addEventListener("change", (e) => {
   updateFromFavorite(selectedCity);
 });
 
+closeAlertFavorite.addEventListener("click", () => {
+  alertFavoriteBox.style.display = "none";
+});
+
 // -------- Functions
 
 async function main() {
@@ -79,7 +72,6 @@ async function main() {
 }
 
 async function getLocation() {
-  console.log("Getting location from API");
   const BASE_URL = "https://api.placekit.co/search";
   const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
 
@@ -110,7 +102,6 @@ async function getLocation() {
       .join("");
 
     apiResults.innerHTML = addressAPI;
-    console.log("Location retrieved successfully");
 
     return data.results;
   } catch (error) {
@@ -121,13 +112,10 @@ async function getLocation() {
 }
 
 function updateLocation(place, index) {
-  console.log("Updating location information");
-
   city.textContent = place[index].city;
   cityDetail.textContent = `${place[index].name}, ${place[index].administrativecode} - ${place[index].country}.`;
   coords.textContent = `Latitude: ${place[index].lat}, Longitude: ${place[index].lng}`;
 
-  console.log("Location information updated");
   return {
     city: place[index].city,
     region: `${place[index].name}, ${place[index].administrativecode} - ${place[index].country}.`,
@@ -137,49 +125,51 @@ function updateLocation(place, index) {
 }
 
 function addFavoriteLocationToLocalStorage() {
-  console.log(
-    "Adding favorite location to local storage and updating favorite location selector",
-  );
-
   // change star icon
   starOutlined?.classList.toggle("hidden");
   starFilled?.classList.toggle("hidden");
 
   //clicked on favorite star
   if (starOutlined.classList.contains("hidden")) {
-    if (!updatedPlace.city || !updatedPlace.region) {
-      console.error("could not add this city to favorites");
+    if (!city.textContent || !cityDetail.textContent) {
+      alertFavoriteBox.classList.remove("hidden");
+      alertMessageFavorite.innerHTML = "You can't add this city to favorites!";
+      alertFavoriteBox.style.display = "block";
+
+      starFilled.classList.add("hidden");
+      starOutlined.classList.remove("hidden");
     } else {
-      favorites.push(updatedPlace);
+      console.log("entrei aqui");
+      let newFavorite = {
+        city: city.textContent,
+        region: cityDetail.textContent,
+        coords: coords.textContent,
+      };
+      favorites.push(newFavorite);
+
+      localStorage.setItem("favLocal", JSON.stringify(favorites));
+
+      //returns all HTML code from first element child
+      const defaultOption = selectFavLocal.firstElementChild.outerHTML;
+      let index = 0;
+      selectFavLocal.innerHTML =
+        defaultOption +
+        favorites
+          .map(
+            (place) =>
+              `<option data-index=${index++} value="${place.city.toLowerCase()}">${place.city}</option>`,
+          )
+          .join("");
     }
-
-    localStorage.setItem("favLocal", JSON.stringify(favorites));
-
-    //returns all HTML code from first element child
-    const defaultOption = selectFavLocal.firstElementChild.outerHTML;
-    let index = 0;
-    selectFavLocal.innerHTML =
-      defaultOption +
-      favorites
-        .map(
-          (place) =>
-            `<option data-index=${index++} value="${place.city.toLowerCase()}">${place.city}</option>`,
-        )
-        .join("");
   }
-
-  console.log(
-    "Favorite location added to local storage and favorite location selector updated",
-  );
 }
 
 function removeFavoriteLocationFromLocalStorage() {
-  console.log(
-    "Removing favorite location from local storage and from favorite location selector ",
-  );
-
   // favorite star not selected
   if (starFilled.classList.contains("hidden")) {
+    if (!city.textContent) {
+      return;
+    }
     const dataLocalStorage = localStorage.getItem("favLocal");
 
     if (dataLocalStorage) {
@@ -198,14 +188,9 @@ function removeFavoriteLocationFromLocalStorage() {
       removedCity.remove();
     }
   }
-  console.log(
-    "Favorite location removed from local storage and favorite location selector",
-  );
 }
 
 function updateFromFavorite(selectedCity) {
-  console.log("Updating location from Favorites");
-
   const favoriteCity = favorites.filter(
     (favorite) => favorite.city === selectedCity,
   );
@@ -213,6 +198,4 @@ function updateFromFavorite(selectedCity) {
   city.textContent = favoriteCity[0].city;
   cityDetail.textContent = favoriteCity[0].region;
   coords.textContent = `Latitude: ${favoriteCity[0].latitude}, Longitude: ${favoriteCity[0].longitude}`;
-
-  console.log("New location updated successfully");
 }
