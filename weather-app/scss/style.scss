@@ -36,9 +36,8 @@ $orange: #ffa62b;
 
 //mobile
 .hourlyRange {
-  border: #023047 solid 1px;
-  padding: 10px;
-
+  border: $dark-green solid 5px;
+  padding: 20px;
 
   #hourly-container {
     display: flex;

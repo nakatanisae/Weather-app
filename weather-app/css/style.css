@@ -16,8 +16,8 @@
 }
 
 .hourlyRange {
-  border: #023047 solid 1px;
-  padding: 10px;
+  border: #16697a solid 5px;
+  padding: 20px;
 }
 .hourlyRange #hourly-container {
   display: flex;
