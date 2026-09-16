@@ -24,7 +24,7 @@
   flex-direction: column;
   gap: 20px;
 }
-.hourlyRange #hourly-container .hourly-card {
+.hourlyRange #hourly-container .hourlyCard {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -36,7 +36,7 @@
     flex-direction: row;
     overflow-x: auto;
   }
-  .hourlyRange #hourly-container .hourly-card {
+  .hourlyRange #hourly-container .hourlyCard {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;

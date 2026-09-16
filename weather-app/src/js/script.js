@@ -87,7 +87,7 @@ async function fetchWeatherData() {
         const icon = showWeatherIcon(item.code)
 
         const card = document.createElement("div");
-        card.className = "hourly-card";
+        card.className = "hourlyCard";
         card.innerHTML = `
                 <p>${timeString}</p>
                 <p>${icon}</p>
