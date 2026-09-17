@@ -320,9 +320,19 @@ $alert-icon-close: #aaaaaa;
     font-size: 0.625rem;
   }
 
-  .hourlyRange {
-    border: #023047 solid 1px;
-    padding: 10px;
+.alertIcon {
+  color: $alert-icon;
+}
+
+//mobile
+.hourlyRange {
+  border: $dark-green solid 5px;
+  padding: 20px;
+
+  #hourly-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
     #hourly-container {
       display: flex;
@@ -338,8 +348,27 @@ $alert-icon-close: #aaaaaa;
   }
 }
 
-//Desktop
+//tablet
+@media (min-width: 376px) and (max-width: 1439px) {
+  .hourlyRange {
+    #hourly-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+
+      .hourlyCard {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+      }
+    }
+  }
+}
+
+// desktop
 @media screen and (min-width: 1440px) {
+
   .hourlyRange {
     #hourly-container {
       display: flex;
