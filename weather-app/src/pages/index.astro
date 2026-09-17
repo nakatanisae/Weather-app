@@ -98,6 +98,39 @@ import { Icon } from "astro-icon/components";
         </div>
       </div>
     </section>
+
+    <section class="dailyForecast">
+      <h2>Forecast - 5 days</h2>
+
+      <div class="dailyForecastCards">
+        <button class="forecastCard" type="button" data-day-index="0">
+          Day 1
+        </button>
+
+        <button class="forecastCard" type="button" data-day-index="1">
+          Day 2
+        </button>
+
+        <button class="forecastCard" type="button" data-day-index="2">
+          Day 3
+        </button>
+
+        <button class="forecastCard" type="button" data-day-index="3">
+          Day 4
+        </button>
+
+        <button class="forecastCard" type="button" data-day-index="4">
+          Day 5
+        </button>
+      </div>
+    </section>
+
+    <section class="hourlyRange">
+      <h2>3 hour range</h2>
+      <div id="hourly-container">
+        <!-- <div class=hourlyCard></div> *The class is Added by script.js-->
+      </div>
+    </section>
   </main>
 </Layout>
 

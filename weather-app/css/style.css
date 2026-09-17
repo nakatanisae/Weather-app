@@ -6,7 +6,7 @@
   font-size: 5rem;
 }
 * h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 * h3 {
   font-size: 2rem;
@@ -44,6 +44,7 @@
 }
 
 .searchResultLocation {
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }
@@ -77,6 +78,8 @@
 
 .bgResultAPI {
   width: 100%;
+  max-width: 15rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   position: relative;
 }
@@ -124,7 +127,8 @@
   height: 20rem;
   background-image: url("/rain_drop.png");
   background-repeat: repeat;
-  background-size: 150px auto; /* rain drop length */
+  background-size: 150px auto;
+  /* rain drop length */
   animation: fall 1s linear infinite;
 }
 
@@ -240,8 +244,6 @@
 }
 .dailyForecast h2 {
   margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 400;
   color: #023047;
 }
 
@@ -313,79 +315,110 @@
   color: #82c0cc;
   text-align: center;
 }
-
+.messageDay .hourlyRange {
+  width: 100%;
+  padding: 1rem;
+  color: #023047;
+}
+.messageDay .hourlyRange h2 {
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+.messageDay .hourlyRange #hourly-container {
+  border: 1px solid #82c0cc;
+}
+.messageDay .hourlyRange #hourly-container .hourlyCard {
+  padding: 0 10px;
+}
+.messageDay .hourlyRange #hourly-container .hourlyCard:hover {
+  background-color: #ede7e3;
+}
 @media (max-width: 600px) {
-  .dailyForecast {
+  .messageDay .dailyForecast {
     padding: 0.5rem;
   }
-  .dailyForecast h2 {
+  .messageDay .dailyForecast h2 {
     margin-bottom: 0.4rem;
-    font-size: 1rem;
   }
-  .dailyForecastCards {
+  .messageDay .dailyForecastCards {
     gap: 0.25rem;
     padding: 0.4rem;
   }
-  .forecastCard {
+  .messageDay .forecastCard {
     min-height: 5.5rem;
     padding: 0.4rem 0.1rem;
     gap: 0.2rem;
   }
-  .forecastWeekday {
+  .messageDay .forecastWeekday {
     font-size: 0.75rem;
   }
-  .forecastDate {
+  .messageDay .forecastDate {
     font-size: 0.65rem;
   }
-  .forecastIcon {
+  .messageDay .forecastIcon {
     font-size: 1.25rem;
   }
-  .forecastTemperature {
+  .messageDay .forecastTemperature {
     font-size: 0.625rem;
   }
-  .hourlyRange {
+  .messageDay .hourlyRange {
     border: #023047 solid 1px;
     padding: 10px;
   }
-  .hourlyRange #hourly-container {
+  .messageDay .hourlyRange #hourly-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
-  .hourlyRange #hourly-container .hourlyCard {
+  .messageDay .hourlyRange #hourly-container .hourlyCard {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
-  .flexMobile #cityCoords {
+  .messageDay .flexMobile #cityCoords {
     font-size: 0.9rem;
   }
 }
 @media (min-width: 601px) and (max-width: 1439px) {
-  .flexWeatherDetail {
+  .messageDay .flexWeatherDetail {
     height: 15rem;
   }
-  .flexWeatherDetail p {
+  .messageDay .flexWeatherDetail p {
     font-size: 1.5rem;
   }
-  .gridWeather {
+  .messageDay .gridWeather {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: center;
     column-gap: 1.5rem;
   }
-  .gridWeather h3 {
+  .messageDay .gridWeather h3 {
     font-size: 1.5rem;
   }
-}
-@media screen and (min-width: 1440px) {
-  .hourlyRange #hourly-container {
+  .messageDay .hourlyRange #hourly-container {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
   }
-  .hourlyRange #hourly-container .hourlyCard {
+  .messageDay .hourlyRange #hourly-container .hourlyCard {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-items: center;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .messageDay .hourlyRange #hourly-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    justify-content: space-around;
+    width: 100%;
+  }
+  .messageDay .hourlyRange .hourlyCard {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;

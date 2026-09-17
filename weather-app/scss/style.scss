@@ -19,7 +19,7 @@ $alert-icon-close: #aaaaaa;
   }
 
   h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   h3 {
@@ -60,6 +60,7 @@ $alert-icon-close: #aaaaaa;
 }
 
 .searchResultLocation {
+  min-width: 0; //add min-width to shrink
   display: flex;
   flex-direction: column;
 }
@@ -92,8 +93,9 @@ $alert-icon-close: #aaaaaa;
 }
 
 .bgResultAPI {
-  width: 100%;
-  // padding: 1rem;
+  width: 100%; // added to fit the screen
+  max-width: 15rem; //added to fit the screen
+  padding: 1rem;
   border-radius: 0.5rem;
   position: relative;
 }
@@ -142,7 +144,8 @@ $alert-icon-close: #aaaaaa;
   height: 20rem;
   background-image: url("/rain_drop.png");
   background-repeat: repeat;
-  background-size: 150px auto; /* rain drop length */
+  background-size: 150px auto;
+  /* rain drop length */
   animation: fall 1s linear infinite;
 }
 
@@ -150,6 +153,7 @@ $alert-icon-close: #aaaaaa;
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(30%);
   }
@@ -269,8 +273,6 @@ $alert-icon-close: #aaaaaa;
 
   h2 {
     margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-    font-weight: 400;
     color: $dark-blue;
   }
 }
@@ -347,101 +349,142 @@ $alert-icon-close: #aaaaaa;
 .messageDay {
   color: $light-blue;
   text-align: center;
-}
-
-// Mobile
-@media (max-width: 600px) {
-  .dailyForecast {
-    padding: 0.5rem;
-
-    h2 {
-      margin-bottom: 0.4rem;
-      font-size: 1rem;
-    }
-  }
-
-  .dailyForecastCards {
-    gap: 0.25rem;
-    padding: 0.4rem;
-  }
-
-  .forecastCard {
-    min-height: 5.5rem;
-    padding: 0.4rem 0.1rem;
-    gap: 0.2rem;
-  }
-
-  .forecastWeekday {
-    font-size: 0.75rem;
-  }
-
-  .forecastDate {
-    font-size: 0.65rem;
-  }
-
-  .forecastIcon {
-    font-size: 1.25rem;
-  }
-
-  .forecastTemperature {
-    font-size: 0.625rem;
-  }
 
   .hourlyRange {
-    border: #023047 solid 1px;
-    padding: 10px;
+    width: 100%;
+    padding: 1rem;
+    color: $dark-blue;
+
+    h2 {
+      margin: 0 0 0.5rem;
+      text-align: center;
+    }
 
     #hourly-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      border: 1px solid $light-blue;
 
       .hourlyCard {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        padding: 0 10px;
+
+        &:hover {
+          background-color: $light-grey;
+        }
       }
     }
   }
 
-  .flexMobile {
-    & #cityCoords {
-      font-size: 0.9rem;
+  // Mobile
+  @media (max-width: 600px) {
+    .dailyForecast {
+      padding: 0.5rem;
+
+      h2 {
+        margin-bottom: 0.4rem;
+      }
+    }
+
+    .dailyForecastCards {
+      gap: 0.25rem;
+      padding: 0.4rem;
+    }
+
+    .forecastCard {
+      min-height: 5.5rem;
+      padding: 0.4rem 0.1rem;
+      gap: 0.2rem;
+    }
+
+    .forecastWeekday {
+      font-size: 0.75rem;
+    }
+
+    .forecastDate {
+      font-size: 0.65rem;
+    }
+
+    .forecastIcon {
+      font-size: 1.25rem;
+    }
+
+    .forecastTemperature {
+      font-size: 0.625rem;
+    }
+
+    .hourlyRange {
+      border: #023047 solid 1px;
+      padding: 10px;
+
+      #hourly-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .hourlyCard {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
+
+    .flexMobile {
+      & #cityCoords {
+        font-size: 0.9rem;
+      }
     }
   }
-}
 
-//tablet
-@media (min-width: 601px) and (max-width: 1439px) {
-  .flexWeatherDetail {
-    // gap: 2rem;
-    height: 15rem;
+  //tablet
+  @media (min-width: 601px) and (max-width: 1439px) {
+    .flexWeatherDetail {
+      // gap: 2rem;
+      height: 15rem;
 
-    & p {
-      font-size: 1.5rem;
+      & p {
+        font-size: 1.5rem;
+      }
+    }
+
+    .gridWeather {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: center;
+      align-items: center;
+      column-gap: 1.5rem;
+
+      & h3 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .hourlyRange {
+      #hourly-container {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+
+        .hourlyCard {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: center;
+        }
+      }
     }
   }
 
-  .gridWeather {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    align-items: center;
-    column-gap: 1.5rem;
-
-    & h3 {
-      font-size: 1.5rem;
-    }
-  }
-}
-
-//Desktop
-@media screen and (min-width: 1440px) {
-  .hourlyRange {
-    #hourly-container {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
+  //Desktop
+  @media screen and (min-width: 1440px) {
+    .hourlyRange {
+      #hourly-container {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        justify-content: space-around;
+        width: 100%;
+      }
 
       .hourlyCard {
         display: flex;
