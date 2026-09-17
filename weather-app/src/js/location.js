@@ -1,3 +1,6 @@
+import { fetchFiveDayForecast } from "./forecast.js";
+import { changeTemperatureColor } from "./script.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   main();
 
@@ -13,13 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   addFavoriteToSelector();
 });
 
-const searchBtn = document.getElementById("searchBtn");
 const inputLocation = document.getElementById("searchLocation");
 const apiResults = document.getElementById("apiResult");
 const city = document.getElementById("cityName");
 const cityDetail = document.getElementById("cityDetail");
 const coords = document.getElementById("cityCoords");
-const tempCelsius = document.getElementById("temperatureCelsius");
 const starOutlined = document.getElementById("starOutlined");
 const starFilled = document.getElementById("starFilled");
 const selectFavLocal = document.getElementById("favoriteLocation");
@@ -27,9 +28,13 @@ const title = document.getElementById("cityTitle");
 const alertFavoriteBox = document.getElementById("customAlertBox");
 const alertMessageFavorite = document.getElementById("alertMessage");
 const closeAlertFavorite = document.getElementById("closeAlert");
+const temperatureC = document.getElementById("temperatureCelsius");
+const apparentTemp = document.getElementById("apparentTemp");
+const rain = document.getElementById("rain");
+const windSpeed = document.getElementById("windSpeed");
+const dayMessage = document.getElementById("dayMessage");
 
 const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
-
 const dataLS = localStorage.getItem("favLocal");
 let favorites = dataLS ? JSON.parse(dataLS) : [];
 
@@ -91,7 +96,7 @@ async function getLocation() {
   try {
     const payload = {
       query: inputLocation.value,
-      types: ["city", "street"],
+      types: ["city", "street", "country"],
     };
 
     const response = await fetch(BASE_URL, {
@@ -124,10 +129,30 @@ async function getLocation() {
   }
 }
 
-function updateLocation(place, index) {
+async function updateLocation(place, index) {
   city.textContent = place[index].city;
   cityDetail.textContent = `${place[index].name}, ${place[index].administrativecode} - ${place[index].country}.`;
   coords.textContent = `Latitude: ${place[index].lat.toFixed(7)}, Longitude: ${place[index].lng.toFixed(7)}`;
+
+  const weatherResult = await fetchFiveDayForecast(
+    place[index].lat,
+    place[index].lng,
+  );
+  console.log("weather:", weatherResult);
+  temperatureC.textContent = weatherResult.current.temperature_2m + "ºC";
+
+  if (!weatherResult.current.is_day) {
+    temperatureC.style.color = "#023047";
+  } else {
+    temperatureC.style.color = changeTemperatureColor(
+      weatherResult.current.weather_code,
+    );
+  }
+
+  apparentTemp.textContent = weatherResult.current.apparent_temperature;
+  rain.textContent = weatherResult.current.rain;
+  windSpeed.textContent = weatherResult.current.wind_speed_10m;
+  dayMessage.textContent = showDayMessage(weatherResult.current.weather_code);
 }
 
 function addFavoriteLocationToLocalStorage() {
@@ -261,5 +286,24 @@ function createCityName(place) {
       .join(separator);
 
     return selectedCity;
+  }
+}
+
+function showDayMessage(code) {
+  switch (true) {
+    //sunny
+    case code === 0:
+      return "It's a beautiful day to appreciate flowers!";
+
+    // cloudy
+    case code > 0 && code <= 3:
+      return "It's a perfect day to watch an orchestra presentation!";
+
+    // rain
+    case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
+      return "Let's make popcorn and watch a movie today!";
+
+    default:
+      return "It's a beautiful day! Enjoy it!";
   }
 }

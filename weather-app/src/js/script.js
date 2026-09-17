@@ -1,4 +1,4 @@
-import {loadFiveDayForecast, setupForecastCardClicks} from './forecast.js';
+import { loadFiveDayForecast, setupForecastCardClicks } from "./forecast.js";
 
 const latitude = 49.2827;
 const longitude = -123.1207;
@@ -19,7 +19,7 @@ async function fetchWeatherData(selectedDate = null) {
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log("Get data:", data);
+    // console.log("Get data:", data);
 
     const times = data.hourly.time;
     const temp = data.hourly.temperature_2m;
@@ -30,22 +30,23 @@ async function fetchWeatherData(selectedDate = null) {
     const currentYear = now.getFullYear();
     const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
     const currentDate = String(now.getDate()).padStart(2, "0");
-  
 
     const todayString = `${currentYear}-${currentMonth}-${currentDate}`;
-    
+
     ////Compare current date and the clicked date
     let searchTimeThreshold;
     const targetDate = selectedDate || todayString;
 
-    if(targetDate === todayString){
+    if (targetDate === todayString) {
       const currentHour = String(now.getHours()).padStart(2, "0");
       searchTimeThreshold = `${todayString}T${currentHour}:00`;
     } else {
       searchTimeThreshold = `${targetDate}T00:00`;
     }
 
-    let startIndex = times.findIndex((timeStr) => timeStr >= searchTimeThreshold);
+    let startIndex = times.findIndex(
+      (timeStr) => timeStr >= searchTimeThreshold,
+    );
 
     if (startIndex === -1) {
       startIndex = 0;
@@ -55,8 +56,11 @@ async function fetchWeatherData(selectedDate = null) {
     const hourly3HoursData = [];
     const maxCards = 8;
 
-    for (let i = startIndex; i < times.length && hourly3HoursData.length < maxCards; i += 3) {
-
+    for (
+      let i = startIndex;
+      i < times.length && hourly3HoursData.length < maxCards;
+      i += 3
+    ) {
       hourly3HoursData.push({
         time: times[i],
         temp: temp[i].toFixed(1),
@@ -64,7 +68,7 @@ async function fetchWeatherData(selectedDate = null) {
       });
     }
 
-    console.log("Data for 3 hours:", hourly3HoursData);
+    // console.log("Data for 3 hours:", hourly3HoursData);
 
     //Show weather icon depending on the weather code
     function showWeatherIcon(code) {
@@ -113,6 +117,26 @@ async function fetchWeatherData(selectedDate = null) {
   }
 }
 
+export function changeTemperatureColor(code) {
+  switch (true) {
+    //sunny
+    case code === 0:
+      return "#ffa62b";
+
+    // cloudy
+    case code > 0 && code <= 3:
+      return "#aaaaaa";
+
+    // rain
+    case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
+      return "#16697a";
+
+    default:
+      return "#000000";
+  }
+}
+
+fetchWeatherData();
 async function initApp() {
   await loadFiveDayForecast(latitude, longitude);
 
@@ -121,7 +145,7 @@ async function initApp() {
   setupForecastCardClicks((selectedDate) => {
     console.log("Selected Date:", selectedDate);
     fetchWeatherData(selectedDate);
-  })
+  });
 }
 
 initApp();
