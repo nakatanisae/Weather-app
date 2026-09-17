@@ -54,7 +54,7 @@ async function fetchWeatherData(selectedDate = null) {
 
     //Loop for each 3 hours
     const hourly3HoursData = [];
-    const maxCards = 24;
+    const maxCards = 8;
 
     for (let i = startIndex; i < times.length && hourly3HoursData.length < maxCards; i += 3) {
 
@@ -89,6 +89,8 @@ async function fetchWeatherData(selectedDate = null) {
 
     //DOM manipulation
     const container = document.getElementById("hourly-container");
+
+    container.innerHTML = "";
 
     hourly3HoursData.forEach((item) => {
       const [datePart, timeString] = item.time.split("T");
