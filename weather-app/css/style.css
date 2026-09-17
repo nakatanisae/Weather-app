@@ -6,7 +6,7 @@
   font-size: 5rem;
 }
 * h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 * h3 {
   font-size: 2rem;
@@ -37,6 +37,7 @@
 }
 
 .searchResultLocation {
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }
@@ -69,7 +70,8 @@
 }
 
 .bgResultAPI {
-  width: 15rem;
+  width: 100%;
+  max-width: 15rem;
   padding: 1rem;
   border-radius: 0.5rem;
   position: relative;
@@ -119,7 +121,8 @@
   height: 20rem;
   background-image: url("/rain_drop.png");
   background-repeat: repeat;
-  background-size: 150px auto; /* rain drop length */
+  background-size: 150px auto;
+  /* rain drop length */
   animation: fall 1s linear infinite;
 }
 
@@ -189,8 +192,6 @@
 }
 .dailyForecast h2 {
   margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 400;
   color: #023047;
 }
 
@@ -261,11 +262,14 @@
 .hourlyRange {
   width: 100%;
   padding: 1rem;
-  border: 1px solid #82c0cc;
+  color: #023047;
 }
 .hourlyRange h2 {
   margin: 0 0 0.5rem;
   text-align: center;
+}
+.hourlyRange #hourly-container {
+  border: 1px solid #82c0cc;
 }
 .hourlyRange #hourly-container .hourlyCard {
   padding: 0 10px;
@@ -274,13 +278,12 @@
   background-color: #ede7e3;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 600px) {
   .dailyForecast {
     padding: 0.5rem;
   }
   .dailyForecast h2 {
     margin-bottom: 0.4rem;
-    font-size: 1rem;
   }
   .dailyForecastCards {
     gap: 0.25rem;
@@ -304,7 +307,6 @@
     font-size: 0.625rem;
   }
   .hourlyRange {
-    border: 1px solid #82c0cc;
     padding: 10px;
   }
   .hourlyRange #hourly-container {
@@ -316,36 +318,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
 }
-.flexRow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem;
-}
-
-.alertIcon {
-  color: #e71414;
-}
-
-.hourlyRange {
-  border: #16697a solid 5px;
-  padding: 20px;
-}
-.hourlyRange #hourly-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.hourlyRange #hourly-container .hourlyCard {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-@media (min-width: 376px) and (max-width: 1439px) {
+@media (min-width: 601px) and (max-width: 1439px) {
   .hourlyRange #hourly-container {
     display: flex;
     flex-direction: row;
@@ -353,6 +329,7 @@
   }
   .hourlyRange #hourly-container .hourlyCard {
     display: flex;
+    flex: 1;
     flex-direction: column;
     flex-shrink: 0;
     align-items: center;
