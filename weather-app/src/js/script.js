@@ -52,17 +52,11 @@ async function fetchWeatherData(selectedDate = null) {
       startIndex = 0;
     }
 
-    
-
-
     //Loop for each 3 hours
     const hourly3HoursData = [];
+    const maxCards = 24;
 
-    for (let i = startIndex; i < times.length; i += 3) {
-
-      if(!times[i].startsWith(targetDate)){
-        break;
-      }
+    for (let i = startIndex; i < times.length && hourly3HoursData.length < maxCards; i += 3) {
 
       hourly3HoursData.push({
         time: times[i],
@@ -97,14 +91,17 @@ async function fetchWeatherData(selectedDate = null) {
     const container = document.getElementById("hourly-container");
 
     hourly3HoursData.forEach((item) => {
-      const timeString = item.time.split("T")[1];
+      const [datePart, timeString] = item.time.split("T");
+      const [year, month, day] = datePart.split("-");
+      const formattedDate = `${parseInt(month)}/${parseInt(day)}`;
 
       const icon = showWeatherIcon(item.code);
 
       const card = document.createElement("div");
       card.className = "hourlyCard";
       card.innerHTML = `
-                <p>${timeString}</p>
+                <p class="hourlyDate">${formattedDate}</p>
+                <p class="hourlyTime">${timeString}</p>
                 <p>${icon}</p>
                 <p>${item.temp}°C</p>`;
 
