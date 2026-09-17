@@ -35,18 +35,18 @@ async function fetchWeatherData(selectedDate = null) {
     const todayString = `${currentYear}-${currentMonth}-${currentDate}`;
     
     ////Compare current date and the clicked date
-    let searchTimeThreshould;
+    let searchTimeThreshold;
     const targetDate = selectedDate || todayString;
 
     if(targetDate === todayString){
       const currentHour = String(now.getHours()).padStart(2, "0");
-      searchTimeThreshould = `${todayString}T${currentHour}:00`;
+      searchTimeThreshold = `${todayString}T${currentHour}:00`;
     } else {
       searchTimeThreshold = `${targetDate}T00:00`;
     }
 
     // const currentFormatTime = `${currentYear}-${currentMonth}-${currentDate}T${currentHour}:00`;
-    let startIndex = times.findIndex((timeStr) => timeStr >= currentFormatTime);
+    let startIndex = times.findIndex((timeStr) => timeStr >= searchTimeThreshold);
 
     if (startIndex === -1) {
       startIndex = 0;
@@ -63,7 +63,7 @@ async function fetchWeatherData(selectedDate = null) {
       if(!times[i].startsWith(targetDate)){
         break;
       }
-      
+
       hourly3HoursData.push({
         time: times[i],
         temp: temp[i].toFixed(1),
@@ -115,4 +115,15 @@ async function fetchWeatherData(selectedDate = null) {
   }
 }
 
-fetchWeatherData();
+async function initApp() {
+  await loadFiveDayForecast(latitude, longitude);
+
+  await fetchWeatherData();
+
+  setupForecastCardClicks((selectedDate) => {
+    console.log("Selected Date:", selectedDate);
+    fetchWeatherData(selectedDate);
+  })
+}
+
+initApp();
