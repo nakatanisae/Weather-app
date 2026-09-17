@@ -258,6 +258,22 @@
   color: #e71414;
 }
 
+.hourlyRange {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #82c0cc;
+}
+.hourlyRange h2 {
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+.hourlyRange #hourly-container .hourlyCard {
+  padding: 0 10px;
+}
+.hourlyRange #hourly-container .hourlyCard:hover {
+  background-color: #ede7e3;
+}
+
 @media (max-width: 375px) {
   .dailyForecast {
     padding: 0.5rem;
@@ -288,7 +304,7 @@
     font-size: 0.625rem;
   }
   .hourlyRange {
-    border: #023047 solid 1px;
+    border: 1px solid #82c0cc;
     padding: 10px;
   }
   .hourlyRange #hourly-container {
@@ -347,6 +363,8 @@
     display: flex;
     flex-direction: row;
     overflow-x: auto;
+    justify-content: space-around;
+    width: 100%;
   }
   .hourlyRange #hourly-container .hourlyCard {
     display: flex;
