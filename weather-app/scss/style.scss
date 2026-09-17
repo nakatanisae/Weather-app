@@ -359,8 +359,27 @@ $alert-icon-close: #aaaaaa;
   }
 }
 
-//Desktop
+//tablet
+@media (min-width: 376px) and (max-width: 1439px) {
+  .hourlyRange {
+    #hourly-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+
+      .hourlyCard {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+      }
+    }
+  }
+}
+
+// desktop
 @media screen and (min-width: 1440px) {
+
   .hourlyRange {
     #hourly-container {
       display: flex;
