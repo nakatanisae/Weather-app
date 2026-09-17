@@ -282,6 +282,27 @@ $alert-icon-close: #aaaaaa;
   color: $alert-icon;
 }
 
+.hourlyRange {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid $light-blue;
+
+  h2{
+    margin: 0 0 0.5rem;
+    text-align: center;
+  }
+    #hourly-container {
+      
+      .hourlyCard {
+        // border: 1px solid $light-blue;
+        padding: 0 10px;
+       &:hover{
+        background-color: $light-grey;
+       }
+      }
+    }
+  }
+
 // Mobile
 @media (max-width: 375px) {
   .dailyForecast {
@@ -321,7 +342,7 @@ $alert-icon-close: #aaaaaa;
   }
 
   .hourlyRange {
-    border: #023047 solid 1px;
+    border: 1px solid $light-blue;
     padding: 10px;
 
     #hourly-container {
@@ -345,6 +366,8 @@ $alert-icon-close: #aaaaaa;
       display: flex;
       flex-direction: row;
       overflow-x: auto;
+      justify-content: space-around;
+      width: 100%;
 
       .hourlyCard {
         display: flex;
