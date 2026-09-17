@@ -8,10 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
       errorGettingCoords,
     );
   }
+
+  // show favorite place after refresh page
+  addFavoriteToSelector();
 });
 
 const searchBtn = document.getElementById("searchBtn");
-const selectLocation = document.getElementById("selectLocation");
 const inputLocation = document.getElementById("searchLocation");
 const apiResults = document.getElementById("apiResult");
 const city = document.getElementById("cityName");
@@ -25,10 +27,13 @@ const title = document.getElementById("cityTitle");
 const alertFavoriteBox = document.getElementById("customAlertBox");
 const alertMessageFavorite = document.getElementById("alertMessage");
 const closeAlertFavorite = document.getElementById("closeAlert");
+
 const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
 
+const dataLS = localStorage.getItem("favLocal");
+let favorites = dataLS ? JSON.parse(dataLS) : [];
+
 let dropDownResults;
-let favorites = [];
 
 // -------- Event listener
 
@@ -65,12 +70,9 @@ selectFavLocal.addEventListener("change", (e) => {
   starFilled.classList.remove("hidden");
   starOutlined.classList.add("hidden");
 
-  const splittedCity = e.target.value.split(" ");
-  const selectedCity = splittedCity
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
-
-  updateFromFavorite(selectedCity);
+  const selectedLocal = e.target.options[e.target.selectedIndex];
+  const selectedPlace = createCityName(selectedLocal.value);
+  updateFromFavorite(selectedPlace, favorites);
 });
 
 closeAlertFavorite.addEventListener("click", () => {
@@ -149,49 +151,45 @@ function addFavoriteLocationToLocalStorage() {
         region: cityDetail.textContent,
         coords: coords.textContent,
       };
-      favorites.push(newFavorite);
 
-      localStorage.setItem("favLocal", JSON.stringify(favorites));
+      const cityExists = favorites.some((fav) => fav.city === newFavorite.city);
+      if (!cityExists) {
+        favorites.push(newFavorite);
+        localStorage.setItem("favLocal", JSON.stringify(favorites));
+      }
 
-      //returns all HTML code from first element child
-      const defaultOption = selectFavLocal.firstElementChild.outerHTML;
-      let index = 0;
-      selectFavLocal.innerHTML =
-        defaultOption +
-        favorites
-          .map(
-            (place) =>
-              `<option data-index=${index++} value="${place.city.toLowerCase()}">${place.city}</option>`,
-          )
-          .join("");
+      addFavoriteToSelector();
     }
+  }
+}
+
+function addFavoriteToSelector() {
+  const defaultOption = selectFavLocal.firstElementChild.outerHTML;
+
+  if (favorites.length > 0) {
+    let index = 0;
+    selectFavLocal.innerHTML =
+      defaultOption +
+      favorites
+        .map(
+          (place) =>
+            `<option data-index=${index++} value="${place.city.toLowerCase()}">${place.city}</option>`,
+        )
+        .join("");
   }
 }
 
 function removeFavoriteLocationFromLocalStorage() {
   // favorite star not selected
   if (starFilled.classList.contains("hidden")) {
-    if (!city.textContent) {
-      return;
-    }
-    const dataLocalStorage = localStorage.getItem("favLocal");
+    favorites = favorites.filter((place) => place.city !== city.textContent);
+    localStorage.setItem("favLocal", JSON.stringify(favorites));
 
-    if (dataLocalStorage) {
-      const places = JSON.parse(dataLocalStorage);
-      const remainingPlaces = places.filter(
-        (place) => place.city !== city.textContent,
-      );
-
-      favorites = remainingPlaces;
-      //remove location from local storage
-      localStorage.setItem("favLocal", JSON.stringify(remainingPlaces));
-
-      //update favorite location selector
-      const removedCity = document.querySelector(
-        `#favoriteLocation option[value="${city.textContent.toLowerCase()}"]`,
-      );
-      removedCity.remove();
-    }
+    //update favorite location selector
+    const removedCity = document.querySelector(
+      `#favoriteLocation option[value="${city.textContent.toLowerCase()}"]`,
+    );
+    removedCity.remove();
   }
 }
 
@@ -248,5 +246,20 @@ function errorGettingCoords(error) {
     coords.textContent = "Latitude: 49.2608724, Longitude: -123.1139529";
   } else {
     console.log("Not possible obtain localization");
+  }
+}
+
+function createCityName(place) {
+  let separator = place.includes("-") ? "-" : place.includes(" ") ? " " : "";
+
+  if (separator === "") {
+    return place[0].toUpperCase() + place.slice(1);
+  } else {
+    const splittedCity = place.split(separator);
+    const selectedCity = splittedCity
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(separator);
+
+    return selectedCity;
   }
 }
