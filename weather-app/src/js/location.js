@@ -1,3 +1,6 @@
+import { fetchFiveDayForecast } from "./forecast.js";
+import { changeTemperatureColor } from "./script.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   main();
 
@@ -8,16 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
       errorGettingCoords,
     );
   }
+
+  // show favorite place after refresh page
+  addFavoriteToSelector();
 });
 
-const searchBtn = document.getElementById("searchBtn");
-const selectLocation = document.getElementById("selectLocation");
 const inputLocation = document.getElementById("searchLocation");
 const apiResults = document.getElementById("apiResult");
 const city = document.getElementById("cityName");
 const cityDetail = document.getElementById("cityDetail");
 const coords = document.getElementById("cityCoords");
-const tempCelsius = document.getElementById("temperatureCelsius");
 const starOutlined = document.getElementById("starOutlined");
 const starFilled = document.getElementById("starFilled");
 const selectFavLocal = document.getElementById("favoriteLocation");
@@ -25,10 +28,17 @@ const title = document.getElementById("cityTitle");
 const alertFavoriteBox = document.getElementById("customAlertBox");
 const alertMessageFavorite = document.getElementById("alertMessage");
 const closeAlertFavorite = document.getElementById("closeAlert");
+const temperatureC = document.getElementById("temperatureCelsius");
+const apparentTemp = document.getElementById("apparentTemp");
+const rain = document.getElementById("rain");
+const windSpeed = document.getElementById("windSpeed");
+const dayMessage = document.getElementById("dayMessage");
+
 const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
+const dataLS = localStorage.getItem("favLocal");
+let favorites = dataLS ? JSON.parse(dataLS) : [];
 
 let dropDownResults;
-let favorites = [];
 
 // -------- Event listener
 
@@ -65,12 +75,9 @@ selectFavLocal.addEventListener("change", (e) => {
   starFilled.classList.remove("hidden");
   starOutlined.classList.add("hidden");
 
-  const splittedCity = e.target.value.split(" ");
-  const selectedCity = splittedCity
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
-
-  updateFromFavorite(selectedCity);
+  const selectedLocal = e.target.options[e.target.selectedIndex];
+  const selectedPlace = createCityName(selectedLocal.value);
+  updateFromFavorite(selectedPlace, favorites);
 });
 
 closeAlertFavorite.addEventListener("click", () => {
@@ -89,7 +96,7 @@ async function getLocation() {
   try {
     const payload = {
       query: inputLocation.value,
-      types: ["city", "street"],
+      types: ["city", "street", "country"],
     };
 
     const response = await fetch(BASE_URL, {
@@ -122,10 +129,30 @@ async function getLocation() {
   }
 }
 
-function updateLocation(place, index) {
+async function updateLocation(place, index) {
   city.textContent = place[index].city;
   cityDetail.textContent = `${place[index].name}, ${place[index].administrativecode} - ${place[index].country}.`;
   coords.textContent = `Latitude: ${place[index].lat.toFixed(7)}, Longitude: ${place[index].lng.toFixed(7)}`;
+
+  const weatherResult = await fetchFiveDayForecast(
+    place[index].lat,
+    place[index].lng,
+  );
+  console.log("weather:", weatherResult);
+  temperatureC.textContent = weatherResult.current.temperature_2m + "ºC";
+
+  if (!weatherResult.current.is_day) {
+    temperatureC.style.color = "#023047";
+  } else {
+    temperatureC.style.color = changeTemperatureColor(
+      weatherResult.current.weather_code,
+    );
+  }
+
+  apparentTemp.textContent = weatherResult.current.apparent_temperature;
+  rain.textContent = weatherResult.current.rain;
+  windSpeed.textContent = weatherResult.current.wind_speed_10m;
+  dayMessage.textContent = showDayMessage(weatherResult.current.weather_code);
 }
 
 function addFavoriteLocationToLocalStorage() {
@@ -149,49 +176,45 @@ function addFavoriteLocationToLocalStorage() {
         region: cityDetail.textContent,
         coords: coords.textContent,
       };
-      favorites.push(newFavorite);
 
-      localStorage.setItem("favLocal", JSON.stringify(favorites));
+      const cityExists = favorites.some((fav) => fav.city === newFavorite.city);
+      if (!cityExists) {
+        favorites.push(newFavorite);
+        localStorage.setItem("favLocal", JSON.stringify(favorites));
+      }
 
-      //returns all HTML code from first element child
-      const defaultOption = selectFavLocal.firstElementChild.outerHTML;
-      let index = 0;
-      selectFavLocal.innerHTML =
-        defaultOption +
-        favorites
-          .map(
-            (place) =>
-              `<option data-index=${index++} value="${place.city.toLowerCase()}">${place.city}</option>`,
-          )
-          .join("");
+      addFavoriteToSelector();
     }
+  }
+}
+
+function addFavoriteToSelector() {
+  const defaultOption = selectFavLocal.firstElementChild.outerHTML;
+
+  if (favorites.length > 0) {
+    let index = 0;
+    selectFavLocal.innerHTML =
+      defaultOption +
+      favorites
+        .map(
+          (place) =>
+            `<option data-index=${index++} value="${place.city.toLowerCase()}">${place.city}</option>`,
+        )
+        .join("");
   }
 }
 
 function removeFavoriteLocationFromLocalStorage() {
   // favorite star not selected
   if (starFilled.classList.contains("hidden")) {
-    if (!city.textContent) {
-      return;
-    }
-    const dataLocalStorage = localStorage.getItem("favLocal");
+    favorites = favorites.filter((place) => place.city !== city.textContent);
+    localStorage.setItem("favLocal", JSON.stringify(favorites));
 
-    if (dataLocalStorage) {
-      const places = JSON.parse(dataLocalStorage);
-      const remainingPlaces = places.filter(
-        (place) => place.city !== city.textContent,
-      );
-
-      favorites = remainingPlaces;
-      //remove location from local storage
-      localStorage.setItem("favLocal", JSON.stringify(remainingPlaces));
-
-      //update favorite location selector
-      const removedCity = document.querySelector(
-        `#favoriteLocation option[value="${city.textContent.toLowerCase()}"]`,
-      );
-      removedCity.remove();
-    }
+    //update favorite location selector
+    const removedCity = document.querySelector(
+      `#favoriteLocation option[value="${city.textContent.toLowerCase()}"]`,
+    );
+    removedCity.remove();
   }
 }
 
@@ -248,5 +271,39 @@ function errorGettingCoords(error) {
     coords.textContent = "Latitude: 49.2608724, Longitude: -123.1139529";
   } else {
     console.log("Not possible obtain localization");
+  }
+}
+
+function createCityName(place) {
+  let separator = place.includes("-") ? "-" : place.includes(" ") ? " " : "";
+
+  if (separator === "") {
+    return place[0].toUpperCase() + place.slice(1);
+  } else {
+    const splittedCity = place.split(separator);
+    const selectedCity = splittedCity
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(separator);
+
+    return selectedCity;
+  }
+}
+
+function showDayMessage(code) {
+  switch (true) {
+    //sunny
+    case code === 0:
+      return "It's a beautiful day to appreciate flowers!";
+
+    // cloudy
+    case code > 0 && code <= 3:
+      return "It's a perfect day to watch an orchestra presentation!";
+
+    // rain
+    case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
+      return "Let's make popcorn and watch a movie today!";
+
+    default:
+      return "It's a beautiful day! Enjoy it!";
   }
 }

@@ -15,11 +15,18 @@
   font-size: 1.2rem;
 }
 
+.fontFamilySniglet {
+  font-family: "Sniglet", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .flexLocation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  gap: 1.5rem;
 }
 
 .bgMenuLocation {
@@ -28,11 +35,11 @@
 }
 
 .favLocation {
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 0.4rem;
   border-radius: 50px;
   height: 3rem;
-  background-color: #ffa62b;
+  background-color: #ffffff;
   cursor: pointer;
 }
 
@@ -69,16 +76,14 @@
 }
 
 .bgResultAPI {
-  width: 15rem;
-  padding: 1rem;
+  width: 100%;
   border-radius: 0.5rem;
   position: relative;
 }
 
 .searchBox {
   width: 100%;
-  height: 2rem;
-  padding: 1rem;
+  height: 1.7rem;
   border: none;
 }
 
@@ -99,14 +104,14 @@
 
 .windowContainer {
   position: relative;
-  width: 100%;
+  width: fit-content;
   height: auto;
   overflow: hidden;
 }
 
 .bgWindow {
-  width: 20rem;
-  height: 20rem;
+  width: 8rem;
+  height: 8rem;
   object-fit: cover;
   display: block;
 }
@@ -131,6 +136,23 @@
     transform: translateY(30%);
   }
 }
+.nightSky {
+  position: absolute;
+  top: 30%;
+  left: 13%;
+  width: 2rem;
+  height: 2.5rem;
+  animation: twinkle 1s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
 .bgResult:hover {
   background-color: #82c0cc;
 }
@@ -141,9 +163,38 @@
   justify-content: center;
   align-items: center;
 }
+.flexMobile p {
+  margin: 0 0 0.5rem;
+}
 
 .favoriteLocationIcon {
   cursor: pointer;
+}
+
+.city {
+  color: #16697a;
+}
+
+.coords {
+  color: #aaaaaa;
+  font-size: medium;
+}
+
+.star {
+  color: #ffa62b;
+}
+
+.flexWeatherDetail {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid #489fb5;
+  border-radius: 20px;
+  padding: 1rem;
+  background-color: rgba(72, 159, 181, 0.5);
+}
+.flexWeatherDetail p {
+  color: #16697a;
 }
 
 .customAlert {
@@ -258,7 +309,12 @@
   color: #e71414;
 }
 
-@media (max-width: 375px) {
+.messageDay {
+  color: #82c0cc;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
   .dailyForecast {
     padding: 0.5rem;
   }
@@ -301,45 +357,26 @@
     flex-direction: row;
     justify-content: space-between;
   }
-}
-.flexRow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem;
-}
-
-.alertIcon {
-  color: #e71414;
-}
-
-.hourlyRange {
-  border: #16697a solid 5px;
-  padding: 20px;
-}
-.hourlyRange #hourly-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.hourlyRange #hourly-container .hourlyCard {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-@media (min-width: 376px) and (max-width: 1439px) {
-  .hourlyRange #hourly-container {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
+  .flexMobile #cityCoords {
+    font-size: 0.9rem;
   }
-  .hourlyRange #hourly-container .hourlyCard {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
+}
+@media (min-width: 601px) and (max-width: 1439px) {
+  .flexWeatherDetail {
+    height: 15rem;
+  }
+  .flexWeatherDetail p {
+    font-size: 1.5rem;
+  }
+  .gridWeather {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
     align-items: center;
+    column-gap: 1.5rem;
+  }
+  .gridWeather h3 {
+    font-size: 1.5rem;
   }
 }
 @media screen and (min-width: 1440px) {

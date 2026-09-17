@@ -31,11 +31,18 @@ $alert-icon-close: #aaaaaa;
   }
 }
 
+.fontFamilySniglet {
+  font-family: "Sniglet", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .flexLocation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  gap: 1.5rem;
 }
 
 .bgMenuLocation {
@@ -44,11 +51,11 @@ $alert-icon-close: #aaaaaa;
 }
 
 .favLocation {
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 0.4rem;
   border-radius: 50px;
   height: 3rem;
-  background-color: $orange;
+  background-color: $white;
   cursor: pointer;
 }
 
@@ -85,16 +92,16 @@ $alert-icon-close: #aaaaaa;
 }
 
 .bgResultAPI {
-  width: 15rem;
-  padding: 1rem;
+  width: 100%;
+  // padding: 1rem;
   border-radius: 0.5rem;
   position: relative;
 }
 
 .searchBox {
   width: 100%;
-  height: 2rem;
-  padding: 1rem;
+  height: 1.7rem;
+  // padding: 1rem;
   border: none;
 }
 
@@ -115,14 +122,14 @@ $alert-icon-close: #aaaaaa;
 
 .windowContainer {
   position: relative;
-  width: 100%;
+  width: fit-content;
   height: auto;
   overflow: hidden;
 }
 
 .bgWindow {
-  width: 20rem;
-  height: 20rem;
+  width: 8rem;
+  height: 8rem;
   object-fit: cover;
   display: block;
 }
@@ -148,6 +155,25 @@ $alert-icon-close: #aaaaaa;
   }
 }
 
+.nightSky {
+  position: absolute;
+  top: 30%;
+  left: 13%;
+  width: 2rem;
+  height: 2.5rem;
+  animation: twinkle 1s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
 .bgResult:hover {
   background-color: $light-blue;
 }
@@ -157,11 +183,47 @@ $alert-icon-close: #aaaaaa;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & p {
+    margin: 0 0 0.5rem;
+  }
 }
 
 .favoriteLocationIcon {
   cursor: pointer;
 }
+
+.city {
+  color: $dark-green;
+}
+
+.coords {
+  color: $alert-icon-close;
+  font-size: medium;
+}
+
+.star {
+  color: $orange;
+}
+
+.flexWeatherDetail {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  // gap: 2rem;
+  border: 1px solid $turquoise;
+  border-radius: 20px;
+  padding: 1rem;
+  background-color: rgba(72, 159, 181, 0.5);
+
+  & p {
+    color: $dark-green;
+  }
+}
+
+// .weatherDetail p {
+//   font-size: 1rem;
+// }
 
 .customAlert {
   display: none;
@@ -282,8 +344,13 @@ $alert-icon-close: #aaaaaa;
   color: $alert-icon;
 }
 
+.messageDay {
+  color: $light-blue;
+  text-align: center;
+}
+
 // Mobile
-@media (max-width: 375px) {
+@media (max-width: 600px) {
   .dailyForecast {
     padding: 0.5rem;
 
@@ -320,19 +387,9 @@ $alert-icon-close: #aaaaaa;
     font-size: 0.625rem;
   }
 
-.alertIcon {
-  color: $alert-icon;
-}
-
-//mobile
-.hourlyRange {
-  border: $dark-green solid 5px;
-  padding: 20px;
-
-  #hourly-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  .hourlyRange {
+    border: #023047 solid 1px;
+    padding: 10px;
 
     #hourly-container {
       display: flex;
@@ -346,29 +403,40 @@ $alert-icon-close: #aaaaaa;
       }
     }
   }
-}
 
-//tablet
-@media (min-width: 376px) and (max-width: 1439px) {
-  .hourlyRange {
-    #hourly-container {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-
-      .hourlyCard {
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
-        align-items: center;
-      }
+  .flexMobile {
+    & #cityCoords {
+      font-size: 0.9rem;
     }
   }
 }
 
-// desktop
-@media screen and (min-width: 1440px) {
+//tablet
+@media (min-width: 601px) and (max-width: 1439px) {
+  .flexWeatherDetail {
+    // gap: 2rem;
+    height: 15rem;
 
+    & p {
+      font-size: 1.5rem;
+    }
+  }
+
+  .gridWeather {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    column-gap: 1.5rem;
+
+    & h3 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+//Desktop
+@media screen and (min-width: 1440px) {
   .hourlyRange {
     #hourly-container {
       display: flex;

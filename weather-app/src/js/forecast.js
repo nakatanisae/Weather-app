@@ -4,9 +4,10 @@ export async function fetchFiveDayForecast(latitude, longitude) {
       latitude: String(latitude),
       longitude: String(longitude),
       daily: "weather_code,temperature_2m_max,temperature_2m_min,sunset",
+      current:
+        "temperature_2m,rain,weather_code,wind_speed_10m,apparent_temperature,is_day",
       timezone: "auto",
       forecast_days: "5",
-
     };
 
     const searchParams = new URLSearchParams(params);
@@ -17,11 +18,11 @@ export async function fetchFiveDayForecast(latitude, longitude) {
 
     if (!response.ok) {
       throw new Error(
-        `Forecast fetch failed: ${response.status} ${response.statusText}`
+        `Forecast fetch failed: ${response.status} ${response.statusText}`,
       );
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Unable to fetch five-day forecast:", error);
     return null;
@@ -39,7 +40,7 @@ export function getFiveDayForecast(forecastData) {
   for (const key in forecastData.daily) {
     const value = forecastData.daily[key];
 
-    fiveDayForecast[key] = value
+    fiveDayForecast[key] = value;
   }
 
   return fiveDayForecast;
@@ -110,11 +111,7 @@ function getWeatherIcon(weatherCode) {
     return "🌨️";
   }
 
-  if (
-    weatherCode === 80 ||
-    weatherCode === 81 ||
-    weatherCode === 82
-  ) {
+  if (weatherCode === 80 || weatherCode === 81 || weatherCode === 82) {
     return "🌦️";
   }
 
@@ -122,11 +119,7 @@ function getWeatherIcon(weatherCode) {
     return "🌨️";
   }
 
-  if (
-    weatherCode === 95 ||
-    weatherCode === 96 ||
-    weatherCode === 99
-  ) {
+  if (weatherCode === 95 || weatherCode === 96 || weatherCode === 99) {
     return "⛈️";
   }
 
@@ -215,11 +208,9 @@ function loadDefaultFiveDayForecast() {
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener(
-    "DOMContentLoaded",
-    loadDefaultFiveDayForecast,
-    { once: true }
-  );
+  document.addEventListener("DOMContentLoaded", loadDefaultFiveDayForecast, {
+    once: true,
+  });
 } else {
   loadDefaultFiveDayForecast();
 }

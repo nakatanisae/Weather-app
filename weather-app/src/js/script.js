@@ -17,7 +17,7 @@ async function fetchWeatherData() {
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log("Get data:", data);
+    // console.log("Get data:", data);
 
     const times = data.hourly.time;
     const temp = data.hourly.temperature_2m;
@@ -48,7 +48,7 @@ async function fetchWeatherData() {
       });
     }
 
-    console.log("Data for 3 hours:", hourly3HoursData);
+    // console.log("Data for 3 hours:", hourly3HoursData);
 
     //Show weather icon depending on the weather code
     function showWeatherIcon(code) {
@@ -89,6 +89,25 @@ async function fetchWeatherData() {
     });
   } catch (error) {
     console.log("Error", error);
+  }
+}
+
+export function changeTemperatureColor(code) {
+  switch (true) {
+    //sunny
+    case code === 0:
+      return "#ffa62b";
+
+    // cloudy
+    case code > 0 && code <= 3:
+      return "#aaaaaa";
+
+    // rain
+    case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
+      return "#16697a";
+
+    default:
+      return "#000000";
   }
 }
 
