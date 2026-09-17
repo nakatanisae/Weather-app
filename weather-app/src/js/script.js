@@ -45,7 +45,6 @@ async function fetchWeatherData(selectedDate = null) {
       searchTimeThreshold = `${targetDate}T00:00`;
     }
 
-    // const currentFormatTime = `${currentYear}-${currentMonth}-${currentDate}T${currentHour}:00`;
     let startIndex = times.findIndex((timeStr) => timeStr >= searchTimeThreshold);
 
     if (startIndex === -1) {
