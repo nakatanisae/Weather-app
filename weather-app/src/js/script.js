@@ -1,3 +1,5 @@
+import {loadFiveDayForecast, setupForecastCardClicks} from './forecast.js';
+
 const latitude = 49.2827;
 const longitude = -123.1207;
 
@@ -12,7 +14,7 @@ const searchParams = new URLSearchParams(params);
 
 const url = `https://api.open-meteo.com/v1/forecast?${searchParams}`;
 
-async function fetchWeatherData() {
+async function fetchWeatherData(selectedDate = null) {
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -23,24 +25,45 @@ async function fetchWeatherData() {
     const temp = data.hourly.temperature_2m;
     const weatherCode = data.hourly.weather_code;
 
-    //Get current time
+    //Get current time(YYYY-MM-DD)
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
     const currentDate = String(now.getDate()).padStart(2, "0");
-    const currentHour = String(now.getHours()).padStart(2, "0");
+  
 
-    const currentFormatTime = `${currentYear}-${currentMonth}-${currentDate}T${currentHour}:00`;
+    const todayString = `${currentYear}-${currentMonth}-${currentDate}`;
+    
+    ////Compare current date and the clicked date
+    let searchTimeThreshould;
+    const targetDate = selectedDate || todayString;
+
+    if(targetDate === todayString){
+      const currentHour = String(now.getHours()).padStart(2, "0");
+      searchTimeThreshould = `${todayString}T${currentHour}:00`;
+    } else {
+      searchTimeThreshold = `${targetDate}T00:00`;
+    }
+
+    // const currentFormatTime = `${currentYear}-${currentMonth}-${currentDate}T${currentHour}:00`;
     let startIndex = times.findIndex((timeStr) => timeStr >= currentFormatTime);
 
     if (startIndex === -1) {
       startIndex = 0;
     }
 
+    
+
+
     //Loop for each 3 hours
     const hourly3HoursData = [];
 
     for (let i = startIndex; i < times.length; i += 3) {
+
+      if(!times[i].startsWith(targetDate)){
+        break;
+      }
+      
       hourly3HoursData.push({
         time: times[i],
         temp: temp[i].toFixed(1),
