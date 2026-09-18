@@ -105,58 +105,6 @@
   align-items: center;
 }
 
-.windowContainer {
-  position: relative;
-  width: fit-content;
-  height: auto;
-  overflow: hidden;
-}
-
-.bgWindow {
-  width: 8rem;
-  height: 8rem;
-  object-fit: cover;
-  display: block;
-}
-
-.rainOverlay {
-  position: absolute;
-  top: -20%;
-  left: 5%;
-  width: 15rem;
-  height: 20rem;
-  background-image: url("/rain_drop.png");
-  background-repeat: repeat;
-  background-size: 150px auto;
-  /* rain drop length */
-  animation: fall 1s linear infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(30%);
-  }
-}
-.nightSky {
-  position: absolute;
-  top: 30%;
-  left: 13%;
-  width: 2rem;
-  height: 2.5rem;
-  animation: twinkle 1s infinite ease-in-out;
-}
-
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
 .bgResult:hover {
   background-color: #82c0cc;
 }
@@ -195,10 +143,11 @@
   border: 1px solid #489fb5;
   border-radius: 20px;
   padding: 1rem;
-  background-color: rgba(72, 159, 181, 0.5);
+  background-color: #023047;
 }
 .flexWeatherDetail p {
-  color: #16697a;
+  color: #ffffff;
+  font-size: 1rem;
 }
 
 .customAlert {
@@ -239,12 +188,15 @@
 }
 
 .dailyForecast {
+  margin: 3rem 0 0;
   width: 100%;
-  padding: 1rem;
+  padding: 3rem 0.5rem;
+  background-color: #489fb5;
 }
 .dailyForecast h2 {
-  margin: 0 0 0.5rem;
-  color: #023047;
+  text-align: center;
+  margin: 0 0 2rem;
+  color: #ffffff;
 }
 
 .dailyForecastCards {
@@ -253,7 +205,8 @@
   gap: 1rem;
   width: 100%;
   padding: 0.75rem;
-  border: 0.0625rem solid #82c0cc;
+  border: 3px solid #82c0cc;
+  border-radius: 10px;
 }
 
 .forecastCard {
@@ -312,116 +265,177 @@
 }
 
 .messageDay {
-  color: #82c0cc;
+  color: #ffa62b;
   text-align: center;
+  padding: 0 1rem;
+  margin: 0 0 2rem;
 }
-.messageDay .hourlyRange {
+
+.hourlyRange {
   width: 100%;
   padding: 1rem;
   color: #023047;
+  background-color: #82c0cc;
 }
-.messageDay .hourlyRange h2 {
-  margin: 0 0 0.5rem;
+.hourlyRange h2 {
+  margin: 2rem 0 3rem;
   text-align: center;
 }
-.messageDay .hourlyRange #hourly-container {
+.hourlyRange #hourly-container {
   border: 1px solid #82c0cc;
 }
-.messageDay .hourlyRange #hourly-container .hourlyCard {
-  padding: 0 10px;
+.hourlyRange #hourly-container .hourlyCard {
+  padding: 0.3rem 2rem;
+  background-color: #ffffff;
 }
-.messageDay .hourlyRange #hourly-container .hourlyCard:hover {
-  background-color: #ede7e3;
+.hourlyRange #hourly-container .hourlyCard .icon3Hour {
+  font-size: 2.5rem;
 }
+
 @media (max-width: 600px) {
-  .messageDay .dailyForecast {
-    padding: 0.5rem;
-  }
-  .messageDay .dailyForecast h2 {
-    margin-bottom: 0.4rem;
-  }
-  .messageDay .dailyForecastCards {
+  .dailyForecastCards {
     gap: 0.25rem;
     padding: 0.4rem;
   }
-  .messageDay .forecastCard {
+  .forecastCard {
     min-height: 5.5rem;
     padding: 0.4rem 0.1rem;
     gap: 0.2rem;
   }
-  .messageDay .forecastWeekday {
+  .forecastWeekday {
     font-size: 0.75rem;
   }
-  .messageDay .forecastDate {
+  .forecastDate {
     font-size: 0.65rem;
   }
-  .messageDay .forecastIcon {
+  .forecastIcon {
     font-size: 1.25rem;
   }
-  .messageDay .forecastTemperature {
+  .forecastTemperature {
     font-size: 0.625rem;
   }
-  .messageDay .hourlyRange {
-    border: #023047 solid 1px;
-    padding: 10px;
+  .hourlyRange {
+    padding: 1rem 1rem 2rem;
   }
-  .messageDay .hourlyRange #hourly-container {
+  .hourlyRange h2 {
+    margin: 2rem;
+  }
+  .hourlyRange #hourly-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
-  .messageDay .hourlyRange #hourly-container .hourlyCard {
+  .hourlyRange #hourly-container .hourlyCard {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    height: 5rem;
+    border-radius: 50px;
   }
-  .messageDay .flexMobile #cityCoords {
+  .flexMobile #cityCoords {
     font-size: 0.9rem;
+  }
+  .iconWeather {
+    font-size: 80px;
+  }
+  .messageDay {
+    font-size: 1.6rem;
   }
 }
 @media (min-width: 601px) and (max-width: 1439px) {
-  .messageDay .flexWeatherDetail {
-    height: 15rem;
+  .flexWeatherDetail {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
   }
-  .messageDay .flexWeatherDetail p {
-    font-size: 1.5rem;
+  .flexWeatherDetail p {
+    font-size: 1.2rem;
   }
-  .messageDay .gridWeather {
+  .gridWeather {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: center;
-    column-gap: 1.5rem;
+    column-gap: 2rem;
   }
-  .messageDay .gridWeather h3 {
-    font-size: 1.5rem;
+  .iconWeather {
+    font-size: 4rem;
   }
-  .messageDay .hourlyRange #hourly-container {
+  .weatherDetail p {
+    font-size: 1.2rem;
+  }
+  .hourlyRange {
+    padding: 3rem;
+  }
+  .hourlyRange #hourly-container {
     display: flex;
-    flex-direction: row;
     overflow-x: auto;
+    column-gap: 1rem;
   }
-  .messageDay .hourlyRange #hourly-container .hourlyCard {
+  .hourlyRange #hourly-container .hourlyCard {
     display: flex;
-    flex: 1;
     flex-direction: column;
-    flex-shrink: 0;
     align-items: center;
+    border-radius: 10px;
+  }
+  .flexCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .messageDay {
+    font-size: 1.6rem;
   }
 }
 @media screen and (min-width: 1440px) {
-  .messageDay .hourlyRange #hourly-container {
+  .hourlyRange #hourly-container {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
     justify-content: space-around;
     width: 100%;
   }
-  .messageDay .hourlyRange .hourlyCard {
+  .hourlyRange .hourlyCard {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    align-items: center;
+    border-radius: 10px;
+  }
+  .flexWeatherDetail {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+  }
+  .flexWeatherDetail p {
+    font-size: 1.5rem;
+  }
+  .gridWeather {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    column-gap: 2rem;
+  }
+  .gridWeather h3 {
+    font-size: 1.5rem;
+  }
+  .iconWeather {
+    font-size: 5rem;
+  }
+  .weatherDetail p {
+    font-size: 1.2rem;
+  }
+  .flexCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 }
