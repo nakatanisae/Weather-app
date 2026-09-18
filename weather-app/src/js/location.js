@@ -307,7 +307,10 @@ function showDayMessage(code) {
       return "Let's make popcorn and watch a movie today!";
 
     //night
+    case code === 101:
+      return "Have a good night!";
+
     default:
-      return "Have a good night! You've been awesome today!";
+      return "You've been awesome today!";
   }
 }
