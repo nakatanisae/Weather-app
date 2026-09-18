@@ -1,4 +1,4 @@
-import { fetchFiveDayForecast } from "./forecast.js";
+import { fetchFiveDayForecast, getWeatherIcon } from "./forecast.js";
 import { changeTemperatureColor } from "./script.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,6 +33,7 @@ const apparentTemp = document.getElementById("apparentTemp");
 const rain = document.getElementById("rain");
 const windSpeed = document.getElementById("windSpeed");
 const dayMessage = document.getElementById("dayMessage");
+const weatherIcon = document.getElementById("weatherIcon");
 
 const API_KEY = "pk_MQu55RAWJ5QJHyqt8phhWF/u5icKNPaYhNLMGXC8Ts4=";
 const dataLS = localStorage.getItem("favLocal");
@@ -138,21 +139,23 @@ async function updateLocation(place, index) {
     place[index].lat,
     place[index].lng,
   );
-  console.log("weather:", weatherResult);
+
+  let weatherCode = weatherResult.current.weather_code;
+
   temperatureC.textContent = weatherResult.current.temperature_2m + "ºC";
 
   if (!weatherResult.current.is_day) {
-    temperatureC.style.color = "#023047";
+    temperatureC.style.color = "#023e8a";
+    weatherCode = 101;
   } else {
-    temperatureC.style.color = changeTemperatureColor(
-      weatherResult.current.weather_code,
-    );
+    temperatureC.style.color = changeTemperatureColor(weatherCode);
   }
 
   apparentTemp.textContent = weatherResult.current.apparent_temperature;
   rain.textContent = weatherResult.current.rain;
   windSpeed.textContent = weatherResult.current.wind_speed_10m;
-  dayMessage.textContent = showDayMessage(weatherResult.current.weather_code);
+  dayMessage.textContent = showDayMessage(weatherCode);
+  weatherIcon.textContent = getWeatherIcon(weatherCode);
 }
 
 function addFavoriteLocationToLocalStorage() {
@@ -293,17 +296,18 @@ function showDayMessage(code) {
   switch (true) {
     //sunny
     case code === 0:
-      return "It's a beautiful day to appreciate flowers!";
+      return "It's a beautiful day to have fun!";
 
     // cloudy
     case code > 0 && code <= 3:
-      return "It's a perfect day to watch an orchestra presentation!";
+      return "It's a perfect day to read a book and drink hot chocolate!";
 
     // rain
     case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
       return "Let's make popcorn and watch a movie today!";
 
+    //night
     default:
-      return "It's a beautiful day! Enjoy it!";
+      return "Have a good night! You've been awesome today!";
   }
 }
