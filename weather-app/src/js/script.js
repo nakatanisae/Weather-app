@@ -184,7 +184,7 @@ export function changeTemperatureColor(code) {
       return "#16697a";
 
     default:
-      return "#000000";
+      return "#6c757d";
   }
 }
 
