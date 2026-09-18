@@ -65,21 +65,17 @@ export function createDailyForecastList(fiveDayForecast) {
   });
 }
 
-function getWeatherIcon(weatherCode) {
+export function getWeatherIcon(weatherCode) {
   if (weatherCode === 0) {
     return "☀️";
   }
 
-  if (weatherCode === 1 || weatherCode === 2) {
+  if (weatherCode === 1 || weatherCode === 2 || weatherCode === 3) {
     return "🌤️";
   }
 
-  if (weatherCode === 3) {
-    return "☁️";
-  }
-
   if (weatherCode === 45 || weatherCode === 48) {
-    return "🌫️";
+    return "☁️";
   }
 
   if (
@@ -123,7 +119,9 @@ function getWeatherIcon(weatherCode) {
     return "⛈️";
   }
 
-  return "☁️";
+  if (weatherCode === 101) {
+    return "🌙";
+  }
 }
 
 export function renderFiveDayForecast(dailyForecastList) {
@@ -157,10 +155,8 @@ export function renderFiveDayForecast(dailyForecastList) {
       <span class="forecastWeekday">${weekday}</span>
       <span class="forecastDate">${monthDay}</span>
       <span class="forecastIcon">${weatherIcon}</span>
-      <span class="forecastTemperature">
-        ${dayForecast.temperature_2m_max}°C /
-        ${dayForecast.temperature_2m_min}°C
-      </span>
+      <span class="forecastTemperature">${dayForecast.temperature_2m_min}°C </span>
+      <span class="forecastTemperature">${dayForecast.temperature_2m_max}°C</span>
     `;
 
     card.dataset.date = dayForecast.date;
