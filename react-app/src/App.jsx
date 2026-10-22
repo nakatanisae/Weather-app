@@ -1,5 +1,11 @@
-function App(){
-  return <h1 className="text-3xl font-bold text-blue-600">Weather App</h1>
+import CurrentWeather from './components/CurrentWeather'
+
+function App() {
+  return (
+    <main>
+      <CurrentWeather />
+    </main>
+  )
 }
 
 export default App
