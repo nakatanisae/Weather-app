@@ -8,7 +8,8 @@ function App() {
         temperature={15}
         province="British Columbia"
         country="Canada"
-        message="Today is a nice day!"
+        weatherCode={0} 
+        isDay={true}
         feelsLike={13}
         rain={0}
         windSpeed={8}
