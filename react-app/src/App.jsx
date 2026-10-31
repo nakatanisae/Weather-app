@@ -1,18 +1,14 @@
 import CurrentWeather from './components/CurrentWeather'
+import {dummyWeather} from './data/dummyWeather'
 
 function App() {
   return (
     <main>
       <CurrentWeather
         city="Vancouver"
-        temperature={15}
         province="British Columbia"
         country="Canada"
-        weatherCode={0} 
-        isDay={true}
-        feelsLike={13}
-        rain={0}
-        windSpeed={8}
+        {...dummyWeather.current}
       />
 
     </main>

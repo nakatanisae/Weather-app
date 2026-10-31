@@ -71,6 +71,10 @@ export function changeTemperatureColor(code) {
         case (code >= 51 && code <= 67) || (code >= 80 && code <= 82):
             return "#16697a";
 
+        //night
+        case (code === 101):
+            return "#023e8a";
+
         default:
             return "#6c757d";
     }

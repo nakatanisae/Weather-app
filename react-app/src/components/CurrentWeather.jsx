@@ -9,9 +9,9 @@ function CurrentWeather({city, temperature, province, country, weatherCode, isDa
             <p className="text-2xl">{province} - {country}</p>
             <p className="text-4xl font-bold" style={{color: changeTemperatureColor(code)}}>{temperature}ºC</p>
             <p className="text-2xl">{showDayMessage(code)}</p>
-            <p>{getWeatherIcon(code)}</p>
+            <p className="text-6xl">{getWeatherIcon(code)}</p>
             <p className="text-2xl">Feeling temperature: {feelsLike}ºC</p>
-            <p className="text-2xl">Possibility to rain: {rain}mm</p>
+            <p className="text-2xl">Rain: {rain}mm</p>
             <p className="text-2xl">Wind speed: {windSpeed}km/h</p>
         </section>
     )
