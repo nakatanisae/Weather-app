@@ -1,5 +1,6 @@
 import CurrentWeather from './components/CurrentWeather'
 import {dummyWeather} from './data/dummyWeather'
+import  ForecastCard from './components/ForecastCard'
 
 function App() {
   return (
@@ -9,6 +10,12 @@ function App() {
         province="British Columbia"
         country="Canada"
         {...dummyWeather.current}
+      />
+      <ForecastCard
+        {...dummyWeather.daily[0]}
+        isSelected={false}
+        onClick={()=> console.log("clicked")}
+        
       />
 
     </main>
