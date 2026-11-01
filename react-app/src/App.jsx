@@ -1,17 +1,27 @@
 import CurrentWeather from './components/CurrentWeather'
+import {dummyWeather} from './data/dummyWeather'
+import  ForecastCard from './components/ForecastCard'
+import  DailyForecast from './components/DailyForecast'
 
 function App() {
   return (
     <main>
       <CurrentWeather
         city="Vancouver"
-        temperature={15}
         province="British Columbia"
         country="Canada"
-        message="Today is a nice day!"
-        feelsLike={13}
-        rain={0}
-        windSpeed={8}
+        {...dummyWeather.current}
+      />
+      <ForecastCard
+        {...dummyWeather.daily[0]}
+        isSelected={false}
+        onClick={()=> console.log("clicked")}
+        
+      />
+      <DailyForecast
+        days={dummyWeather.daily}
+        selectedDate="2026-10-28"
+        onSelectDate={(date) => console.log(date)}
       />
 
     </main>
