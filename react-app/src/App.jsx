@@ -1,6 +1,7 @@
 import CurrentWeather from './components/CurrentWeather'
 import {dummyWeather} from './data/dummyWeather'
 import  ForecastCard from './components/ForecastCard'
+import  DailyForecast from './components/DailyForecast'
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
         isSelected={false}
         onClick={()=> console.log("clicked")}
         
+      />
+      <DailyForecast
+        days={dummyWeather.daily}
+        selectedDate="2026-10-28"
+        onSelectDate={(date) => console.log(date)}
       />
 
     </main>
