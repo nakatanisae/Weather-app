@@ -117,3 +117,12 @@ export function formatDate(dateString) {
     }
 }
 
+export function formatTimeRange(startTime){
+    const startingTime = startTime.slice(0,2);
+    const endingTime = (Number(startingTime) + 3) % 24;
+    const endingHour = String(endingTime).padStart(2, "0")
+    
+    return `${startTime} - ${endingHour}:00`
+    
+}
+

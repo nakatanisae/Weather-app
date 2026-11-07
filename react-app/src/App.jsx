@@ -2,6 +2,7 @@ import CurrentWeather from './components/CurrentWeather'
 import {dummyWeather} from './data/dummyWeather'
 import  ForecastCard from './components/ForecastCard'
 import  DailyForecast from './components/DailyForecast'
+import  HourlyCard from './components/HourlyCard'
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         onSelectDate={(date) => console.log(date)}
       />
 
+      <HourlyCard
+        {...dummyWeather.hourly[3]}
+      />
     </main>
   )
 }
