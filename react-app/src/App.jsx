@@ -1,11 +1,17 @@
 import CurrentWeather from './components/CurrentWeather'
-import {dummyWeather} from './data/dummyWeather'
-import  DailyForecast from './components/DailyForecast'
-import  HourlyForecast from './components/HourlyForecast'
+import DailyForecast from './components/DailyForecast'
+import HourlyForecast from './components/HourlyForecast'
+import { dummyWeather, dummyLocations } from './data/dummyWeather'
+import SearchBar from './components/SearchBar'
 
 function App() {
   return (
     <main>
+      <SearchBar
+        results={dummyLocations}
+        onSelectLocation={(location) => console.log(location)}
+      />
+
       <CurrentWeather
         city="Vancouver"
         province="British Columbia"

@@ -19,3 +19,10 @@ export const dummyWeather = {
     { time: "2026-10-27T21:00", temp: 9.6, weatherCode: 101 },
   ],
 }
+
+// Dummy search results (same keys as the PlaceKit response)
+export const dummyLocations = [
+  { name: "Toronto", city: "Toronto", administrative: "Ontario", country: "Canada", lat: 43.6534817, lng: -79.3839347 },
+  { name: "Toronto Island", city: "Toronto", administrative: "Ontario", country: "Canada", lat: 43.6228, lng: -79.3784 },
+  { name: "Vancouver", city: "Vancouver", administrative: "British Columbia", country: "Canada", lat: 49.2608724, lng: -123.1139529 },
+]
