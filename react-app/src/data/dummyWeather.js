@@ -26,3 +26,10 @@ export const dummyLocations = [
   { name: "Toronto Island", city: "Toronto", administrative: "Ontario", country: "Canada", lat: 43.6228, lng: -79.3784 },
   { name: "Vancouver", city: "Vancouver", administrative: "British Columbia", country: "Canada", lat: 49.2608724, lng: -123.1139529 },
 ]
+
+// Dummy favorite places
+export const dummyFavorites = [
+  { city: "Vancouver", region: "British Columbia - Canada", lat: 49.2608724, lng: -123.1139529 },
+  { city: "Toronto", region: "Ontario - Canada", lat: 43.6534817, lng: -79.3839347 },
+  { city: "Montreal", region: "Quebec - Canada", lat: 45.5031824, lng: -73.5698065 },
+]

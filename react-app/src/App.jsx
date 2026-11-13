@@ -1,8 +1,9 @@
 import CurrentWeather from './components/CurrentWeather'
 import DailyForecast from './components/DailyForecast'
 import HourlyForecast from './components/HourlyForecast'
-import { dummyWeather, dummyLocations } from './data/dummyWeather'
+import { dummyWeather, dummyLocations, dummyFavorites } from './data/dummyWeather'
 import SearchBar from './components/SearchBar'
+import FavoriteSelect from './components/FavoriteSelect'
 
 function App() {
   return (
@@ -27,6 +28,11 @@ function App() {
 
       <HourlyForecast
         hours={dummyWeather.hourly}
+      />
+
+      <FavoriteSelect
+        favorites = {dummyFavorites}
+        onSelect={(city) => console.log(city)}
       />
 
     </main>
