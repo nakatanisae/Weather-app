@@ -4,10 +4,18 @@ import HourlyForecast from './components/HourlyForecast'
 import { dummyWeather, dummyLocations, dummyFavorites } from './data/dummyWeather'
 import SearchBar from './components/SearchBar'
 import FavoriteSelect from './components/FavoriteSelect'
+import AlertModal from './components/AlertModal'
+import { useState } from 'react'
 
 function App() {
+  const [alertMessage, setAlertMessage] = useState("");
+
   return (
     <main>
+      {alertMessage && (
+        <AlertModal message={alertMessage} onClose={() => setAlertMessage("You can't add this city to favorites!")}/>
+      )}
+
       <div className='flex gap-4'>
         <FavoriteSelect
           favorites = {dummyFavorites}
@@ -20,9 +28,6 @@ function App() {
       />
       </div>
       
-
-      
-
       <CurrentWeather
         city="Vancouver"
         province="British Columbia"
@@ -41,9 +46,6 @@ function App() {
       <HourlyForecast
         hours={dummyWeather.hourly}
       />
-
-      
-
     </main>
   )
 }
