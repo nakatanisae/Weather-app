@@ -8,16 +8,28 @@ import FavoriteSelect from './components/FavoriteSelect'
 function App() {
   return (
     <main>
-      <SearchBar
+      <div className='flex gap-4'>
+        <FavoriteSelect
+          favorites = {dummyFavorites}
+          onSelect={(city) => console.log(city)}
+        />
+
+        <SearchBar
         results={dummyLocations}
         onSelectLocation={(location) => console.log(location)}
       />
+      </div>
+      
+
+      
 
       <CurrentWeather
         city="Vancouver"
         province="British Columbia"
         country="Canada"
         {...dummyWeather.current}
+        isFavorite={true}
+        onToggleFavorite={() => console.log("toggle favorite")}
       />
 
       <DailyForecast
@@ -30,10 +42,7 @@ function App() {
         hours={dummyWeather.hourly}
       />
 
-      <FavoriteSelect
-        favorites = {dummyFavorites}
-        onSelect={(city) => console.log(city)}
-      />
+      
 
     </main>
   )
