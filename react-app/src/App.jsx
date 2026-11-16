@@ -13,7 +13,7 @@ function App() {
   return (
     <main>
       {alertMessage && (
-        <AlertModal message={alertMessage} onClose={() => setAlertMessage("You can't add this city to favorites!")}/>
+        <AlertModal message={alertMessage} onClose={() => setAlertMessage("")}/>
       )}
 
       <div className='flex gap-4'>
