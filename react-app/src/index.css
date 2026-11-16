@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+  --color-dark-blue: #023047;
+  --color-dark-green: #16697a;
+  --color-turquoise: #489fb5;
+  --color-light-blue: #82c0cc;
+  --color-light-grey: #ede7e3;
+  --color-orange: #ffa62b;
+  --font-sniglet: "Sniglet", system-ui;
+}
