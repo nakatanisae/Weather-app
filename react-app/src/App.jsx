@@ -10,6 +10,7 @@ import { useState } from 'react'
 function App() {
   const [selectedDate, setSelectedDate] = useState(dummyWeather.daily[0].date)
   const [alertMessage, setAlertMessage] = useState("");
+  const [location, setLocation] = useState(dummyFavorites[0])
 
   return (
     <main>
@@ -20,19 +21,30 @@ function App() {
       <div className='flex gap-4'>
         <FavoriteSelect
           favorites = {dummyFavorites}
-          onSelect={(city) => console.log(city)}
+          onSelect={(city) => {
+            const favorite = dummyFavorites.find((fav) =>fav.city===city);
+            setLocation(favorite);
+          }}
         />
 
         <SearchBar
         results={dummyLocations}
-        onSelectLocation={(location) => console.log(location)}
+        onSelectLocation={(result) => 
+          setLocation({
+            city: result.city,
+            province:result.administrative,
+            country:result.country,
+            lat:result.lat,
+            lng:result.lng,
+          })
+        }
       />
       </div>
       
       <CurrentWeather
-        city="Vancouver"
-        province="British Columbia"
-        country="Canada"
+        city={location.city}
+        province={location.administrative}
+        country={location.country}
         {...dummyWeather.current}
         isFavorite={true}
         onToggleFavorite={() => console.log("toggle favorite")}
