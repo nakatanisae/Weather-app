@@ -8,9 +8,23 @@ import AlertModal from './components/AlertModal'
 import { useState } from 'react'
 
 function App() {
-  const [selectedDate, setSelectedDate] = useState(dummyWeather.daily[0].date)
+  const [selectedDate, setSelectedDate] = useState(dummyWeather.daily[0].date);
   const [alertMessage, setAlertMessage] = useState("");
-  const [location, setLocation] = useState(dummyFavorites[0])
+  const [location, setLocation] = useState(dummyFavorites[0]);
+  const [favorites, setFavorites] = useState(dummyFavorites);
+
+  // derived from state, so not its own state
+  const isFavorite = favorites.some((fav) => fav.city === location.city);
+
+  function handleToggleFavorite() {
+    if (isFavorite) {
+      setFavorites(favorites.filter((fav) => fav.city !== location.city));
+    } else if (!location.city || !location.province) {
+      setAlertMessage("You can't add this city to favorites!");
+    } else {
+      setFavorites([...favorites, location]);
+    }
+  }
 
   return (
     <main>
@@ -20,9 +34,9 @@ function App() {
 
       <div className='flex gap-4'>
         <FavoriteSelect
-          favorites = {dummyFavorites}
+          favorites = {favorites}
           onSelect={(city) => {
-            const favorite = dummyFavorites.find((fav) =>fav.city===city);
+            const favorite = favorites.find((fav) =>fav.city===city);
             setLocation(favorite);
           }}
         />
@@ -46,8 +60,8 @@ function App() {
         province={location.province}
         country={location.country}
         {...dummyWeather.current}
-        isFavorite={true}
-        onToggleFavorite={() => console.log("toggle favorite")}
+        isFavorite={isFavorite}
+        onToggleFavorite={handleToggleFavorite}
       />
 
       <DailyForecast
