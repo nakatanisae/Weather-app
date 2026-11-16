@@ -8,6 +8,7 @@ import AlertModal from './components/AlertModal'
 import { useState } from 'react'
 
 function App() {
+  const [selectedDate, setSelectedDate] = useState(dummyWeather.daily[0].date)
   const [alertMessage, setAlertMessage] = useState("");
 
   return (
@@ -39,12 +40,15 @@ function App() {
 
       <DailyForecast
         days={dummyWeather.daily}
-        selectedDate="2026-10-28"
-        onSelectDate={(date) => console.log(date)}
+        selectedDate={selectedDate}
+        onSelectDate={(date) => setSelectedDate(date)}
       />
 
       <HourlyForecast
-        hours={dummyWeather.hourly}
+        hours={dummyWeather.hourly.filter((hour) => 
+          (hour.time.startsWith(selectedDate))
+          
+        )}
       />
     </main>
   )
