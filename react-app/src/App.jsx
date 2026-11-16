@@ -43,7 +43,7 @@ function App() {
       
       <CurrentWeather
         city={location.city}
-        province={location.administrative}
+        province={location.province}
         country={location.country}
         {...dummyWeather.current}
         isFavorite={true}
